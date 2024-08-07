@@ -1,0 +1,72 @@
+  0%|                                                                                                                                                                                                                                                                                              | 0/12343 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 297, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 286, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3318, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3363, in compute_loss
+    outputs = model(**inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 15, in wrapped_fn
+    ret_val = func(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 1852, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/gemma/modeling_gemma.py", line 1053, in forward
+    loss = loss_fct(shift_logits, shift_labels)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 544.00 MiB. GPU 0 has a total capacity of 23.62 GiB of which 488.31 MiB is free. Process 2057630 has 6.66 GiB memory in use. Including non-PyTorch memory, this process has 16.28 GiB memory in use. Of the allocated memory 15.35 GiB is allocated by PyTorch, and 290.93 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 297, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 286, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3318, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3363, in compute_loss
+    outputs = model(**inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 15, in wrapped_fn
+    ret_val = func(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 1852, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/gemma/modeling_gemma.py", line 1053, in forward
+    loss = loss_fct(shift_logits, shift_labels)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 544.00 MiB. GPU 0 has a total capacity of 23.62 GiB of which 488.31 MiB is free. Process 2057630 has 6.66 GiB memory in use. Including non-PyTorch memory, this process has 16.28 GiB memory in use. Of the allocated memory 15.35 GiB is allocated by PyTorch, and 290.93 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

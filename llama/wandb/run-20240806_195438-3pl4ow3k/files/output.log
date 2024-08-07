@@ -1,0 +1,45 @@
+
+  0%|                                                                                                                                                                                                                                                                                                 | 0/12343 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 300, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 289, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3349, in training_step
+    self.accelerator.backward(loss, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/accelerate/accelerator.py", line 2151, in backward
+    self.deepspeed_engine_wrapped.backward(loss, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/accelerate/utils/deepspeed.py", line 175, in backward
+    self.engine.step()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2167, in step
+    self._take_model_step(lr_kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2073, in _take_model_step
+    self.optimizer.step()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/zero/stage_1_and_2.py", line 1878, in step
+    int(self.partition_size[i])).to(self.single_partition_of_fp32_groups[i].dtype)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 5.75 GiB. GPU 0 has a total capacity of 23.62 GiB of which 3.77 GiB is free. Including non-PyTorch memory, this process has 19.66 GiB memory in use. Of the allocated memory 16.14 GiB is allocated by PyTorch, and 2.87 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 300, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 289, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3349, in training_step
+    self.accelerator.backward(loss, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/accelerate/accelerator.py", line 2151, in backward
+    self.deepspeed_engine_wrapped.backward(loss, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/accelerate/utils/deepspeed.py", line 175, in backward
+    self.engine.step()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2167, in step
+    self._take_model_step(lr_kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2073, in _take_model_step
+    self.optimizer.step()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/zero/stage_1_and_2.py", line 1878, in step
+    int(self.partition_size[i])).to(self.single_partition_of_fp32_groups[i].dtype)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 5.75 GiB. GPU 0 has a total capacity of 23.62 GiB of which 3.77 GiB is free. Including non-PyTorch memory, this process has 19.66 GiB memory in use. Of the allocated memory 16.14 GiB is allocated by PyTorch, and 2.87 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
