@@ -4,7 +4,7 @@
     },
 
     "zero_optimization": {
-        "stage": 1,
+        "stage": 2,
         "allgather_partitions": true,
         "allgather_bucket_size": 1e8,
         "overlap_comm": true,

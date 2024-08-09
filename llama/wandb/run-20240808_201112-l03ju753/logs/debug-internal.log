@@ -1,0 +1,984 @@
+2024-08-08 20:11:12,759 INFO    StreamThr :349419 [internal.py:wandb_internal():86] W&B internal server running at pid: 349419, started at: 2024-08-08 20:11:12.758587
+2024-08-08 20:11:12,761 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status
+2024-08-08 20:11:12,765 INFO    WriterThread:349419 [datastore.py:open_for_write():85] open: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/run-l03ju753.wandb
+2024-08-08 20:11:12,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: header
+2024-08-08 20:11:12,767 DEBUG   SenderThread:349419 [sender.py:send():382] send: run
+2024-08-08 20:11:12,940 INFO    SenderThread:349419 [dir_watcher.py:__init__():211] watching files in: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files
+2024-08-08 20:11:12,940 INFO    SenderThread:349419 [sender.py:_start_run_threads():1136] run started: l03ju753 with start time 1723119072.758844
+2024-08-08 20:11:12,945 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: check_version
+2024-08-08 20:11:12,945 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: check_version
+2024-08-08 20:11:13,067 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: run_start
+2024-08-08 20:11:13,083 DEBUG   HandlerThread:349419 [system_info.py:__init__():32] System info init
+2024-08-08 20:11:13,083 DEBUG   HandlerThread:349419 [system_info.py:__init__():47] System info init done
+2024-08-08 20:11:13,083 INFO    HandlerThread:349419 [system_monitor.py:start():194] Starting system monitor
+2024-08-08 20:11:13,083 INFO    SystemMonitor:349419 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-08-08 20:11:13,083 INFO    HandlerThread:349419 [system_monitor.py:probe():214] Collecting system info
+2024-08-08 20:11:13,084 INFO    SystemMonitor:349419 [interfaces.py:start():190] Started cpu monitoring
+2024-08-08 20:11:13,085 INFO    SystemMonitor:349419 [interfaces.py:start():190] Started disk monitoring
+2024-08-08 20:11:13,086 INFO    SystemMonitor:349419 [interfaces.py:start():190] Started gpu monitoring
+2024-08-08 20:11:13,088 INFO    SystemMonitor:349419 [interfaces.py:start():190] Started memory monitoring
+2024-08-08 20:11:13,088 INFO    SystemMonitor:349419 [interfaces.py:start():190] Started network monitoring
+2024-08-08 20:11:13,097 DEBUG   HandlerThread:349419 [system_info.py:probe():196] Probing system
+2024-08-08 20:11:13,099 DEBUG   HandlerThread:349419 [system_info.py:_probe_git():181] Probing git
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_info.py:_probe_git():189] Probing git done
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_info.py:probe():244] Probing system done
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_monitor.py:probe():223] {'os': 'Linux-6.5.0-44-generic-x86_64-with-glibc2.35', 'python': '3.10.13', 'heartbeatAt': '2024-08-08T12:11:13.097965', 'startedAt': '2024-08-08T12:11:12.752116', 'docker': None, 'cuda': None, 'args': ('--local_rank=0', '--deepspeed', 'configs/ds_config_zero2_no_offload.json', '--model_name_or_path', '/home/rwkv/JL/model/qwen2-1.5b', '--use_lora', 'True', '--init_lora_weights', 'pissa_niter_4', '--target_modules', 'q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj', '--lora_rank', '32', '--lora_alpha', '32', '--lora_dropout', '0', '--data_path', '/home/rwkv/JL/model/MetaMathQA', '--dataset_field', 'query', 'response', '--dataset_split', 'train[:100000]', '--output_dir', '/home/rwkv/JL/out_model/llama-test', '--num_train_epochs', '1', '--model_max_length', '512', '--per_device_train_batch_size', '1', '--gradient_accumulation_steps', '32', '--save_strategy', 'steps', '--save_steps', '1000', '--save_total_limit', '2', '--learning_rate', '2e-5', '--weight_decay', '0.', '--warmup_ratio', '0.', '--logging_steps', '1', '--lr_scheduler_type', 'cosine', '--report_to', 'wandb', '--merge', 'True'), 'state': 'running', 'program': '/home/rwkv/JL/GMM/llama/gmm.py', 'codePathLocal': 'gmm.py', 'codePath': 'llama/gmm.py', 'git': {'remote': 'https://github.com/JL-er/GMM.git', 'commit': '74dce7f004b5b16bfd24c8ca22e737aee6ff0769'}, 'email': '997529190@qq.com', 'root': '/home/rwkv/JL/GMM', 'host': 'rwkv-Z790M-AORUS-ELITE-AX', 'username': 'rwkv', 'executable': '/home/rwkv/miniconda3/bin/python', 'cpu_count': 20, 'cpu_count_logical': 28, 'cpu_freq': {'current': 1231.6887142857142, 'min': 800.0, 'max': 5000.0}, 'cpu_freq_per_core': [{'current': 2160.037, 'min': 800.0, 'max': 5500.0}, {'current': 1790.554, 'min': 800.0, 'max': 5500.0}, {'current': 1680.588, 'min': 800.0, 'max': 5500.0}, {'current': 800.0, 'min': 800.0, 'max': 5500.0}, {'current': 1878.185, 'min': 800.0, 'max': 5500.0}, {'current': 800.0, 'min': 800.0, 'max': 5500.0}, {'current': 800.0, 'min': 800.0, 'max': 5500.0}, {'current': 1674.008, 'min': 800.0, 'max': 5500.0}, {'current': 1598.988, 'min': 800.0, 'max': 5600.0}, {'current': 800.0, 'min': 800.0, 'max': 5600.0}, {'current': 1519.295, 'min': 800.0, 'max': 5600.0}, {'current': 1581.395, 'min': 800.0, 'max': 5600.0}, {'current': 800.0, 'min': 800.0, 'max': 5500.0}, {'current': 1414.587, 'min': 800.0, 'max': 5500.0}, {'current': 1713.703, 'min': 800.0, 'max': 5500.0}, {'current': 1687.619, 'min': 800.0, 'max': 5500.0}, {'current': 1878.334, 'min': 800.0, 'max': 4300.0}, {'current': 1365.08, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 1117.597, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}, {'current': 800.0, 'min': 800.0, 'max': 4300.0}], 'disk': {'/': {'total': 916.2753829956055, 'used': 481.33922958374023}}, 'gpu': 'NVIDIA GeForce RTX 4090', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 4090', 'memory_total': 25757220864}], 'memory': {'total': 62.55397415161133}}
+2024-08-08 20:11:13,102 INFO    HandlerThread:349419 [system_monitor.py:probe():224] Finished collecting system info
+2024-08-08 20:11:13,102 INFO    HandlerThread:349419 [system_monitor.py:probe():227] Publishing system info
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_info.py:_save_pip():68] Saving pip packages done
+2024-08-08 20:11:13,102 DEBUG   HandlerThread:349419 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2024-08-08 20:11:13,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/requirements.txt
+2024-08-08 20:11:13,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/conda-environment.yaml
+2024-08-08 20:11:14,798 DEBUG   HandlerThread:349419 [system_info.py:_save_conda():87] Saving conda packages done
+2024-08-08 20:11:14,798 DEBUG   HandlerThread:349419 [system_info.py:_save_code():90] Saving code
+2024-08-08 20:11:14,799 DEBUG   HandlerThread:349419 [system_info.py:_save_code():111] Saving code done
+2024-08-08 20:11:14,799 DEBUG   HandlerThread:349419 [system_info.py:_save_patches():128] Saving git patches
+2024-08-08 20:11:14,820 DEBUG   HandlerThread:349419 [system_info.py:_save_patches():170] Saving git patches done
+2024-08-08 20:11:14,820 INFO    HandlerThread:349419 [system_monitor.py:probe():229] Finished publishing system info
+2024-08-08 20:11:14,821 DEBUG   SenderThread:349419 [sender.py:send():382] send: files
+2024-08-08 20:11:14,821 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-metadata.json with policy now
+2024-08-08 20:11:14,821 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file code/llama/gmm.py with policy now
+2024-08-08 20:11:14,822 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file diff.patch with policy now
+2024-08-08 20:11:14,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:11:14,824 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:11:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/conda-environment.yaml
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/diff.patch
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-metadata.json
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/code/llama/gmm.py
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/code/llama
+2024-08-08 20:11:14,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/code
+2024-08-08 20:11:15,076 DEBUG   SenderThread:349419 [sender.py:send():382] send: telemetry
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: config
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: telemetry
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:15,077 WARNING SenderThread:349419 [sender.py:send_metric():1343] Seen metric with glob (shouldn't happen)
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: telemetry
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: telemetry
+2024-08-08 20:11:15,077 DEBUG   SenderThread:349419 [sender.py:send():382] send: config
+2024-08-08 20:11:15,081 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:15,081 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:15,081 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFAB560203D8</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:15,455 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:15,456 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:15,456 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFAB6B88FE49</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:15,649 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:15,649 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:15,649 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFAB57495425</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:15,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:16,322 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:16,322 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:16,322 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFABA01ACB0F</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:16,764 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: metric
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:16,765 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:16,766 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:16,865 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:16,865 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:16,865 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFABBA9BF7ED</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:16,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_created():271] file/dir created: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:17,629 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:17,629 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:17,629 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFABC0CD2267</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:17,766 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:17,940 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:18,409 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:18,409 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:18,409 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFAC1C2CE98E</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:18,414 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:18,415 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:18,415 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:18,415 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:18,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:18,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:19,781 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:19,781 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:19,781 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFAC51C479BD</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:19,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:19,949 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:19,949 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:19,949 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFAC6A36E28A</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:20,075 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:20,075 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:20,076 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:20,076 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:20,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:20,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:21,743 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:21,744 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:21,744 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:21,744 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:21,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:21,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:22,941 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:22,965 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:22,965 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:22,965 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFAD2683B8C0</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:23,410 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:23,410 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:23,410 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:23,411 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:23,411 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:23,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:23,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:24,284 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:24,284 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:24,284 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFAD7A67D18E</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:24,716 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:24,717 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:24,717 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFAD88901547</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:24,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:25,074 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:25,074 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:25,074 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:25,075 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:25,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:25,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:26,716 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:26,717 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:26,717 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:26,717 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:26,942 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:26,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:27,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:28,375 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:28,375 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:28,376 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:28,376 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:28,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:28,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:29,376 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:29,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:11:29,824 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:11:29,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:11:29,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:30,072 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:30,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:31,086 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:31,086 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:31,086 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:31,666 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:31,667 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:31,667 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:31,668 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:31,943 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:32,403 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:32,403 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:32,403 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFAF5E94F450</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:32,944 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:33,321 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:33,322 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:33,322 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:33,322 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:33,944 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:33,944 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:33,970 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:33,970 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:33,970 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFAFB61FDD12</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:34,667 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:34,667 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:34,667 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFAFC3822803</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:34,944 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:34,999 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:34,999 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:35,000 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:35,000 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:35,001 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:35,944 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:35,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:36,657 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:36,658 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:36,658 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:36,658 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:36,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:36,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:37,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:38,310 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:38,311 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:38,311 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:38,311 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:38,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:38,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:39,945 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:39,948 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:39,949 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:39,949 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:39,949 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:40,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:40,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:40,950 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:41,607 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:41,608 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:41,608 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:41,608 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:41,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:41,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:42,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:43,287 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:43,288 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:43,288 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:43,288 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:43,946 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:43,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:44,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:11:44,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:11:44,824 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:11:44,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:44,984 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:45,071 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:45,071 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:45,071 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:45,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:45,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:46,073 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:46,608 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:46,609 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:46,609 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:46,609 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:46,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:46,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/config.yaml
+2024-08-08 20:11:46,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:47,947 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:48,308 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:48,308 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:48,308 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:48,309 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:48,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:48,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:49,226 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:11:49,226 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:49,226 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFB349554295</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:49,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:50,016 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:50,016 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:50,016 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:50,016 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:50,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:50,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:51,675 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:51,676 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:51,676 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:51,676 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:51,677 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:51,948 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:51,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:52,099 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:11:52,099 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:52,099 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFB3F3C9C59B</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:52,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:53,348 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:53,348 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:53,348 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:53,348 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:53,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:53,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:54,673 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:11:54,673 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:11:54,673 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFB4660B3F33</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:11:54,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:55,004 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:55,004 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:55,005 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:55,005 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:55,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:55,949 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:56,646 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:56,647 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:56,647 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:56,647 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:56,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:56,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:57,648 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:11:57,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:58,307 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:11:58,308 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:11:58,308 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:11:58,308 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:11:58,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:11:58,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:11:59,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:11:59,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:11:59,824 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:11:59,950 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:00,044 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:00,082 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:00,082 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:00,083 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:00,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:00,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:01,696 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:01,697 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:01,697 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:01,697 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:01,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:01,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:02,698 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:02,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:03,343 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:03,343 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:03,344 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:03,344 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:03,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:03,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:04,951 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:05,010 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:05,011 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:05,011 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:05,011 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:05,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:05,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:06,689 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:06,690 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:06,690 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:06,690 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:06,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:06,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:07,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:08,342 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:08,342 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:08,342 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:08,343 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:08,343 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:08,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:08,952 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:09,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:09,994 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:09,995 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:09,995 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:09,995 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:10,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:10,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:11,668 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:11,668 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:11,669 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:11,669 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:11,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:11,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:12,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:13,089 DEBUG   SystemMonitor:349419 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-08-08 20:12:13,089 DEBUG   SenderThread:349419 [sender.py:send():382] send: stats
+2024-08-08 20:12:13,349 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:13,349 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:13,349 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:13,349 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:13,350 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:13,953 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:13,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:12:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:12:14,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:12:14,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:15,056 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:15,081 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:15,081 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:15,082 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:15,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:15,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:16,720 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:16,721 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:16,721 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:16,721 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:16,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:16,954 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:17,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:18,359 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:18,359 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:18,360 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:18,360 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:18,360 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:18,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:18,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:19,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:20,014 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:20,015 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:20,015 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:20,015 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:20,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:20,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:21,665 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:21,666 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:21,666 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:21,666 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:21,955 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:21,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:22,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:23,371 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:23,371 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:23,372 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:23,372 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:23,372 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:23,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:23,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:24,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:25,025 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:25,026 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:25,026 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:25,027 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:25,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:25,956 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:26,696 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:26,696 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:26,697 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:26,697 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:26,946 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:12:26,946 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:12:26,946 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFBC0EC8E3AE</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:12:26,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:26,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:27,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:28,350 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:28,351 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:28,351 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:28,351 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:28,702 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:12:28,702 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:12:28,702 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFBC7A4BE0EF</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:12:28,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:28,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:29,352 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:29,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:12:29,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:12:29,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:12:29,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:30,056 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:30,536 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:30,536 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:30,536 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:30,957 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:30,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:31,684 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:31,685 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:31,685 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:31,686 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:31,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:31,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:32,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:33,419 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:33,422 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:33,422 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:33,422 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:33,682 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:12:33,682 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:12:33,682 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFBD98E16BB4</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:12:33,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:33,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:34,423 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:34,958 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:35,127 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:35,128 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:35,128 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:35,128 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:35,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:35,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:36,768 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:36,768 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:36,769 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:36,769 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:36,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:36,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:37,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:38,432 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:38,433 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:38,438 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:38,438 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:38,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:38,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:39,439 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:39,959 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:40,094 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:40,095 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:40,095 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:40,095 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:40,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:40,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:41,759 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:41,760 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:41,760 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:41,760 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:41,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:41,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:42,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:43,090 DEBUG   SenderThread:349419 [sender.py:send():382] send: stats
+2024-08-08 20:12:43,462 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:43,463 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:43,469 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:43,469 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:43,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:43,960 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:44,469 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:44,824 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:12:44,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:12:44,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:12:44,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:45,208 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:45,209 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:45,209 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:45,209 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:45,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:45,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:46,853 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:46,854 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:46,854 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:46,854 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:46,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:46,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:47,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:48,531 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:48,531 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:48,537 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:48,537 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:48,961 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:48,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:49,538 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:49,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:50,174 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:50,175 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:50,175 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:50,175 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:50,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:50,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:51,797 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:51,798 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:51,798 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:51,798 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:51,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:51,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:52,962 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:53,511 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:53,512 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:53,512 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:53,513 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:53,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:53,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:54,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:55,209 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:12:55,209 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:55,210 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:55,210 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:55,210 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:55,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:55,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:56,863 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:56,863 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:56,864 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:56,864 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:56,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:56,963 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:57,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:58,499 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:12:58,500 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:12:58,500 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:12:58,500 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:12:58,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:12:58,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:12:59,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:12:59,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:12:59,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:12:59,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:00,204 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:00,205 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:00,205 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:00,205 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:00,214 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:00,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:00,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:01,849 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:01,850 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:01,850 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:01,850 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:01,964 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:01,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:02,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:03,542 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:03,543 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:03,543 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:03,543 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:03,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:03,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:04,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:05,232 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:05,232 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:05,239 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:05,239 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:05,239 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:05,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:05,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:06,922 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:06,923 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:06,923 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:06,923 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:06,965 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:06,966 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:07,966 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:08,586 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:08,587 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:08,587 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:08,588 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:08,966 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:08,966 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:09,966 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:10,257 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:10,257 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:10,258 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:10,264 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:10,264 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:10,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:10,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:11,931 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:11,931 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:11,931 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:11,931 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:11,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:11,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:12,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:13,090 DEBUG   SenderThread:349419 [sender.py:send():382] send: stats
+2024-08-08 20:13:13,628 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:13,628 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:13,628 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:13,628 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:13,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:13,967 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:13:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:13:14,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:13:14,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:15,279 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:15,320 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:15,321 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:15,321 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:15,321 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:15,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:15,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:16,922 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:16,923 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:16,923 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:16,923 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:16,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:16,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:17,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:18,582 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:18,582 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:18,582 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:18,583 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:18,968 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:18,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:19,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:20,247 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:20,248 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:20,248 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:20,248 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:20,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:20,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:21,248 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:21,884 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:21,884 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:21,884 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:21,885 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:21,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:21,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:22,969 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:23,560 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:23,560 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:23,561 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:23,561 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:23,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:23,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:24,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:25,216 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:25,217 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:25,217 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:25,217 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:25,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:25,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:26,865 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:26,865 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:26,865 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:26,865 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:26,866 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:26,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:26,970 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:27,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:28,522 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:28,523 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:28,523 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:28,523 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:28,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:28,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:29,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:13:29,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:13:29,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:13:29,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:30,220 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:30,221 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:30,221 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:30,221 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:30,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:30,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:31,838 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:31,839 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:31,839 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:31,839 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:31,971 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:31,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:32,839 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:32,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:33,162 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/wandb-metadata.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=8415486cdfd32d3ffaad00646780d7e5eb40dfc36302523c8c60fd7462c44a6e
+2024-08-08 20:13:33,162 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '5528', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:13:33,162 ERROR   wandb-upload_0:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/wandb-metadata.json</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/wandb-metadata.json</Resource><Region>wandb-local</Region><RequestId>17E9BFCB7C67F077</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:13:33,479 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:33,479 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:33,479 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:33,480 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:33,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:33,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:34,662 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121115Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=ef1df9389efbb44d628d863372fbd9a8ad3eb55691ccafd9e9b68f9ca7d57fe2
+2024-08-08 20:13:34,662 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '14197', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:13:34,662 ERROR   wandb-upload_1:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/code/llama/gmm.py</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/code/llama/gmm.py</Resource><Region>wandb-local</Region><RequestId>17E9BFCBD5133073</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:13:34,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:35,145 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:35,146 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:35,146 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:35,147 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:35,972 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:35,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:36,784 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:36,784 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:36,785 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:36,785 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:36,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:36,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:37,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:38,471 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:38,471 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:38,472 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:38,472 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:38,472 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:38,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:38,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:39,973 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:40,130 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:40,131 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:40,131 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:40,131 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:40,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:40,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:41,792 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:41,793 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:41,793 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:41,793 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:41,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:41,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:42,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:43,090 DEBUG   SenderThread:349419 [sender.py:send():382] send: stats
+2024-08-08 20:13:43,422 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:43,423 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:43,423 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:43,423 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:43,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:43,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:44,423 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:44,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:13:44,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:13:44,826 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:13:44,974 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:45,128 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:45,129 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:45,129 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:45,129 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:45,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:45,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:46,749 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:46,749 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:46,750 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:46,750 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:46,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:46,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:47,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:48,395 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2761] upload_file exception http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913: 503 Server Error: Service Unavailable for url: http://dian.sea-group.org:9098/local-files/mobius/huggingface/l03ju753/diff.patch?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=FS%2BimP8205gHBuibMeAr0A%3D%3D%2F20240808%2Fwandb-local%2Fs3%2Faws4_request&X-Amz-Date=20240808T121114Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-User=mobius&X-Amz-Signature=dc745744866aea8f7e4f4f413a4530f2a8cb023e6ca4b16e0847b4ff898c9913
+2024-08-08 20:13:48,395 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2763] upload_file request headers: {'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '293534', 'Authorization': 'Basic dXNlcjpsb2NhbC0yNWIwMmYyNWUzNGUzOTlkYmI1OWJjNjFlZWVmY2RkZTYzNDRhOGI2'}
+2024-08-08 20:13:48,395 ERROR   wandb-upload_2:349419 [internal_api.py:upload_file():2765] upload_file response body: b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>SlowDown</Code><Message>Resource requested is unreadable, please reduce your request rate</Message><Key>mobius/huggingface/l03ju753/diff.patch</Key><BucketName>local-files</BucketName><Resource>/local-files/mobius/huggingface/l03ju753/diff.patch</Resource><Region>wandb-local</Region><RequestId>17E9BFCEC97422CF</RequestId><HostId>18bf63b7-01d2-4a3f-8eda-6b508ac9c4f3</HostId></Error>'
+2024-08-08 20:13:48,456 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:48,457 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:48,457 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:48,457 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:48,975 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:48,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:49,457 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:49,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:50,099 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:50,099 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:50,099 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:50,100 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:50,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:50,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:51,768 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:51,769 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:51,769 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:51,770 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:51,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:51,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:52,976 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:53,441 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:53,441 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:53,441 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:53,441 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:53,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:53,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:54,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:55,089 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:13:55,089 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:55,089 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:55,090 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:55,090 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:55,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:55,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:56,762 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:56,763 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:56,763 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:56,763 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:56,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:56,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:57,977 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:58,415 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:13:58,415 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:13:58,416 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:13:58,416 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:13:58,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:13:58,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:13:59,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:13:59,826 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:13:59,826 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:13:59,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:00,099 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:00,099 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:00,099 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:00,099 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:00,099 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:00,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:00,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:01,859 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:01,860 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:01,860 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:01,860 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:01,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:01,978 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:02,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:03,557 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:03,557 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:03,557 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:03,557 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:03,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:03,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:04,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:05,234 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:05,234 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:05,235 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:05,235 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:05,235 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:05,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:05,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:06,874 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:06,875 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:06,875 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:06,875 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:06,979 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:06,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:07,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:08,507 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:08,508 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:08,508 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:08,508 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:08,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:08,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:09,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:10,155 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:10,156 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:10,156 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:10,156 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:10,980 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:10,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:11,156 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:11,793 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:11,794 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:11,794 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:11,794 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:11,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:11,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:12,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:13,091 DEBUG   SenderThread:349419 [sender.py:send():382] send: stats
+2024-08-08 20:14:13,468 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:13,469 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:13,469 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:13,469 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:13,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:13,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: stop_status
+2024-08-08 20:14:14,825 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: internal_messages
+2024-08-08 20:14:14,825 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: stop_status
+2024-08-08 20:14:14,981 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:15,139 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:15,139 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:15,139 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:15,140 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:15,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:15,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:16,772 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:16,772 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:16,773 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:16,773 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:16,773 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:16,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:16,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:17,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:18,427 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:18,428 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:18,428 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:18,428 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:18,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:18,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:19,982 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:20,105 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:20,106 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:20,106 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:20,106 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:20,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:20,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:21,763 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:21,772 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:21,772 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:21,772 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:21,772 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:21,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:21,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:22,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:23,411 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:23,413 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:23,413 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:23,413 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:23,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:23,983 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:24,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:25,091 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:25,092 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:25,092 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:25,093 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:25,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:25,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:26,736 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:26,737 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:26,737 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:26,738 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end
+2024-08-08 20:14:26,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/wandb-summary.json
+2024-08-08 20:14:26,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:27,738 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: status_report
+2024-08-08 20:14:27,984 INFO    Thread-12 :349419 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/rwkv/JL/GMM/llama/wandb/run-20240808_201112-l03ju753/files/output.log
+2024-08-08 20:14:28,409 DEBUG   HandlerThread:349419 [handler.py:handle_request():146] handle_request: partial_history
+2024-08-08 20:14:28,410 DEBUG   SenderThread:349419 [sender.py:send():382] send: history
+2024-08-08 20:14:28,410 DEBUG   SenderThread:349419 [sender.py:send_request():409] send_request: summary_record
+2024-08-08 20:14:28,410 INFO    SenderThread:349419 [sender.py:_save_file():1392] saving file wandb-summary.json with policy end

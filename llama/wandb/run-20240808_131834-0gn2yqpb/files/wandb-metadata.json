@@ -1,0 +1,243 @@
+{
+    "os": "Linux-6.5.0-44-generic-x86_64-with-glibc2.35",
+    "python": "3.10.13",
+    "heartbeatAt": "2024-08-08T05:18:34.538612",
+    "startedAt": "2024-08-08T05:18:34.096013",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--local_rank=0",
+        "--deepspeed",
+        "configs/ds_config_zero2_no_offload.json",
+        "--model_name_or_path",
+        "/home/rwkv/JL/model/llama2-7b",
+        "--use_lora",
+        "True",
+        "--init_lora_weights",
+        "pissa_niter_4",
+        "--target_modules",
+        "q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj",
+        "--lora_rank",
+        "32",
+        "--lora_alpha",
+        "32",
+        "--lora_dropout",
+        "0",
+        "--data_path",
+        "/home/rwkv/JL/model/MetaMathQA",
+        "--dataset_field",
+        "query",
+        "response",
+        "--dataset_split",
+        "train[:100000]",
+        "--output_dir",
+        "/home/rwkv/JL/out_model/llama-test",
+        "--num_train_epochs",
+        "1",
+        "--model_max_length",
+        "512",
+        "--per_device_train_batch_size",
+        "1",
+        "--gradient_accumulation_steps",
+        "32",
+        "--save_strategy",
+        "steps",
+        "--save_steps",
+        "1000",
+        "--save_total_limit",
+        "2",
+        "--learning_rate",
+        "2e-5",
+        "--weight_decay",
+        "0.",
+        "--warmup_ratio",
+        "0.",
+        "--logging_steps",
+        "1",
+        "--lr_scheduler_type",
+        "cosine",
+        "--report_to",
+        "wandb",
+        "--merge",
+        "True"
+    ],
+    "state": "running",
+    "program": "/home/rwkv/JL/GMM/llama/gmm.py",
+    "codePathLocal": "gmm.py",
+    "codePath": "llama/gmm.py",
+    "git": {
+        "remote": "https://github.com/JL-er/GMM.git",
+        "commit": "74dce7f004b5b16bfd24c8ca22e737aee6ff0769"
+    },
+    "email": "997529190@qq.com",
+    "root": "/home/rwkv/JL/GMM",
+    "host": "rwkv-Z790M-AORUS-ELITE-AX",
+    "username": "rwkv",
+    "executable": "/home/rwkv/miniconda3/bin/python",
+    "cpu_count": 20,
+    "cpu_count_logical": 28,
+    "cpu_freq": {
+        "current": 1206.769107142857,
+        "min": 800.0,
+        "max": 5000.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2013.651,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 2737.909,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 3301.757,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 3086.996,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 3095.794,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 2695.834,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 2708.266,
+            "min": 800.0,
+            "max": 5600.0
+        },
+        {
+            "current": 2883.886,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 2724.749,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 5500.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1353.423,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 1100.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        },
+        {
+            "current": 800.0,
+            "min": 800.0,
+            "max": 4300.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 916.2753829956055,
+            "used": 477.9721031188965
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total": 25757220864
+        }
+    ],
+    "memory": {
+        "total": 62.55397415161133
+    }
+}

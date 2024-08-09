@@ -1,0 +1,94 @@
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Current SDK version is 0.16.1
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Configure stats pid to 207864
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Loading settings from /home/rwkv/.config/wandb/settings
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Loading settings from /home/rwkv/JL/GMM/llama/wandb/settings
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'llama/gmm.py', 'program_abspath': '/home/rwkv/JL/GMM/llama/gmm.py', 'program': '/home/rwkv/JL/GMM/llama/gmm.py'}
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:_log_setup():524] Logging user logs to /home/rwkv/JL/GMM/llama/wandb/run-20240808_120405-tkif170s/logs/debug.log
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:_log_setup():525] Logging internal logs to /home/rwkv/JL/GMM/llama/wandb/run-20240808_120405-tkif170s/logs/debug-internal.log
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:init():564] calling init triggers
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:init():571] wandb.init called with sweep_config: {}
+config: {}
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:init():614] starting backend
+2024-08-08 12:04:05,419 INFO    MainThread:207864 [wandb_init.py:init():618] setting up manager
+2024-08-08 12:04:05,421 INFO    MainThread:207864 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-08-08 12:04:05,421 INFO    MainThread:207864 [wandb_init.py:init():624] backend started and connected
+2024-08-08 12:04:05,422 INFO    MainThread:207864 [wandb_init.py:init():716] updated telemetry
+2024-08-08 12:04:05,453 INFO    MainThread:207864 [wandb_init.py:init():749] communicating run to backend with 90.0 second timeout
+2024-08-08 12:05:03,624 INFO    Thread-2 (wrapped_target):207864 [retry.py:__call__():172] Retry attempt failed:
+Traceback (most recent call last):
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connection.py", line 203, in _new_conn
+    sock = connection.create_connection(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connectionpool.py", line 790, in urlopen
+    response = self._make_request(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connectionpool.py", line 496, in _make_request
+    conn.request(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connection.py", line 395, in request
+    self.endheaders()
+  File "/home/rwkv/miniconda3/lib/python3.10/http/client.py", line 1278, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/home/rwkv/miniconda3/lib/python3.10/http/client.py", line 1038, in _send_output
+    self.send(msg)
+  File "/home/rwkv/miniconda3/lib/python3.10/http/client.py", line 976, in send
+    self.connect()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connection.py", line 243, in connect
+    self.sock = self._new_conn()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connection.py", line 212, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPConnection object at 0x7be491c2b8b0>, 'Connection to dian.sea-group.org timed out. (connect timeout=20)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/requests/adapters.py", line 486, in send
+    resp = conn.urlopen(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/connectionpool.py", line 844, in urlopen
+    retries = retries.increment(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/urllib3/util/retry.py", line 515, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='dian.sea-group.org', port=9098): Max retries exceeded with url: /graphql (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7be491c2b8b0>, 'Connection to dian.sea-group.org timed out. (connect timeout=20)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/retry.py", line 131, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/sdk/internal/internal_api.py", line 369, in execute
+    return self.client.execute(*args, **kwargs)  # type: ignore
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 52, in execute
+    result = self._get_result(document, *args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 60, in _get_result
+    return self.transport.execute(document, *args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/sdk/lib/gql_request.py", line 58, in execute
+    request = self.session.post(self.url, **post_args)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/requests/sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/requests/adapters.py", line 507, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPConnectionPool(host='dian.sea-group.org', port=9098): Max retries exceeded with url: /graphql (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7be491c2b8b0>, 'Connection to dian.sea-group.org timed out. (connect timeout=20)'))
+2024-08-08 12:05:35,482 ERROR   MainThread:207864 [wandb_init.py:init():775] encountered error: Run initialization has timed out after 90.0 sec. 
+Please refer to the documentation for additional information: https://docs.wandb.ai/guides/track/tracking-faq#initstarterror-error-communicating-with-wandb-process-
+2024-08-08 12:05:35,689 ERROR   MainThread:207864 [wandb_init.py:init():1188] Run initialization has timed out after 90.0 sec. 
+Please refer to the documentation for additional information: https://docs.wandb.ai/guides/track/tracking-faq#initstarterror-error-communicating-with-wandb-process-
+Traceback (most recent call last):
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 1170, in init
+    run = wi.init()
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 781, in init
+    raise error
+wandb.errors.CommError: Run initialization has timed out after 90.0 sec. 
+Please refer to the documentation for additional information: https://docs.wandb.ai/guides/track/tracking-faq#initstarterror-error-communicating-with-wandb-process-
+2024-08-08 12:05:36,693 WARNING MsgRouterThr:207864 [router.py:message_loop():77] message_loop has been closed

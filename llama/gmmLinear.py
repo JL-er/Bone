@@ -4,7 +4,7 @@ from torch.nn import functional as F
 import functools
 from einops import rearrange
 GBMM_CONFIG = {
-    "g": 32,
+    "g": 64,
     "h": 64,
     "parts": {"att", "ln", "time", "ffn"},
     "gbmm": False,
@@ -49,54 +49,76 @@ GBMM_CONFIG = {
 #         w = (reshaped+output_broadcast).reshape(*self.weight.shape)   
 #         return F.linear(x, self.weight.data+w)
     
-class GbmmLinear(nn.Module):
-    def __init__(self, in_features: int, out_features: int, bias: bool):
-        super().__init__()
-        self.r = GBMM_CONFIG["g"]
-        self.h = GBMM_CONFIG["h"]
-        self.weight = nn.Parameter(torch.empty((out_features, in_features)))
-        assert bias == False, "Biased QuantLinear not supported"
-        self.head_A = out_features//self.h
-        self.head_B = in_features//self.h
-        self.chunk = self.head_A*self.head_B
+# class GbmmLinear(nn.Module):
+#     def __init__(self, in_features: int, out_features: int, bias: bool):
+#         super().__init__()
+#         self.r = GBMM_CONFIG["g"]
+#         self.h = GBMM_CONFIG["h"]
+#         self.weight = nn.Parameter(torch.empty((out_features, in_features)))
+#         assert bias == False, "Biased QuantLinear not supported"
+#         self.head_A = out_features//self.h
+#         self.head_B = in_features//self.h
+#         self.chunk = self.head_A*self.head_B
         
-        if in_features!=out_features:
-            self.r = self.r*2
-        # if out_features==self.h:
-        #     self.r = in_features//self.h
-        self.r = self.r
-        self.gbmm = nn.Parameter(torch.zeros(self.r, self.h, self.h))
+#         if in_features!=out_features:
+#             self.r = self.r*2
+#         # if out_features==self.h:
+#         #     self.r = in_features//self.h
+#         self.r = self.r
+#         self.gbmm = nn.Parameter(torch.zeros(self.r, self.h, self.h))
 
-    def forward(self, x):
-        w = self.weight.data.view(self.head_A, self.h,self.head_B, self.h).transpose(1,2).reshape(self.chunk//self.r,*self.gbmm.shape)@self.gbmm
-        w = w.transpose(1,2).reshape(*self.weight.shape)
-        return F.linear(x, self.weight.data+w)
+#     def forward(self, x):
+#         w = self.weight.data.view(self.head_A, self.h,self.head_B, self.h).transpose(1,2).reshape(self.chunk//self.r,*self.gbmm.shape)@self.gbmm
+#         w = w.transpose(1,2).reshape(*self.weight.shape)
+#         return F.linear(x, self.weight.data+w)
     
+# class GbmmLinear(nn.Module):
+#     def __init__(self, in_features: int, out_features: int, bias: bool):
+#         super().__init__()
+#         self.weight = nn.Parameter(torch.empty((out_features, in_features)))
+#         assert bias == False, "Biased QuantLinear not supported"
+
+#         self.gbmm = nn.Parameter(torch.zeros(out_features, 64))
+#         # self.gbmma = nn.Parameter(torch.zeros(64, in_features))
+#         self.in_features = in_features
+#         self.out_features = out_features
+#     def forward(self, x):
+#         # print(x.shape, self.weight.shape)
+#         # xx = rearrange(x, 'b l (h d) -> b l h d', d = 64)
+#         # ic = xx@self.lora_state
+#         # ic = torch.sum(ic, dim=-2)
+#         # w = self.weight.data.reshape(self.out_features, self.in_features//64, 64)+self.gbmm.unsqueeze(-2)
+#         # w = w.reshape(*self.weight.shape)
+
+#         #w = w.transpose(1,2).reshape(*self.weight.shape)
+#         xx = torch.sum(F.linear(rearrange(x, 'b l (h d) -> b l h d', d = 64), self.gbmm),dim=-2)
+#         return F.linear(x, self.weight)+xx
+import torch.utils.checkpoint as checkpoint
+
 class GbmmLinear(nn.Module):
     def __init__(self, in_features: int, out_features: int, bias: bool):
         super().__init__()
-        self.r = GBMM_CONFIG["g"]
-        self.h = GBMM_CONFIG["h"]
         self.weight = nn.Parameter(torch.empty((out_features, in_features)))
         assert bias == False, "Biased QuantLinear not supported"
-        self.head_A = out_features//self.h
-        self.head_B = in_features//self.h
-        self.chunk = self.head_A*self.head_B
-        
-        if in_features!=out_features:
-            self.r = self.r*2
-        # if out_features==self.h:
-        #     self.r = in_features//self.h
-        self.r = self.r
-        self.gbmm = nn.Parameter(torch.zeros(64, out_features))
+        self.r = 32
+        self.gbmm = nn.Parameter(torch.zeros(out_features, self.r))
+        self.in_features = in_features
+        self.out_features = out_features
+    
+    def bone(self):
+        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
+        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        return w
 
     def forward(self, x):
-        # print(x.shape, self.weight.shape)
-        xx = rearrange(x, 'b l (h d) -> b l h d', d = 64)
-        ic = xx@self.gbmm
-        ic = torch.sum(ic, dim=-2)
-        #w = w.transpose(1,2).reshape(*self.weight.shape)
-        return F.linear(x, self.weight.data) + ic
+        #w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)  #@
+        # w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.gbmm.reshape(self.out_features//self.r, self.r, -1)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
+        # w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        # return F.linear(x,self.weight+w)
+        # w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
+        # w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        w = checkpoint.checkpoint(self.bone, use_reentrant=False)
+        return F.linear(x, w)
     
 
 def get_nb_trainable_parameters(model) -> tuple[int, int]:

@@ -1,9 +1,9 @@
 BASE_MODEL="/home/rwkv/JL/model/Gemma-2B"
-OUTPUT_PATH="/home/rwkv/JL/out_model/Gemma-meta-2btest"
+OUTPUT_PATH="/home/rwkv/JL/out_model/llama-test"
 DATA_PATH="/home/rwkv/JL/model/MetaMathQA"
 
 # batch size = per_device_train_batch_size * gradient_accumulation_steps * num_gpus = 128
-deepspeed --master_port=16971 --include=localhost:0 gmm.py \
+deepspeed --include=localhost:0 gmm.py \
     --deepspeed configs/ds_config_zero2_no_offload.json \
     --model_name_or_path $BASE_MODEL \
     --use_lora True \
@@ -18,8 +18,8 @@ deepspeed --master_port=16971 --include=localhost:0 gmm.py \
     --output_dir $OUTPUT_PATH \
     --num_train_epochs 1 \
     --model_max_length 512 \
-    --per_device_train_batch_size 2 \
-    --gradient_accumulation_steps 16 \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 32 \
     --save_strategy "steps" \
     --save_steps 1000 \
     --save_total_limit 2 \

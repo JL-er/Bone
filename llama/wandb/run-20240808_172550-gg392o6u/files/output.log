@@ -1,0 +1,104 @@
+  0%|                                                                                                                                                                                                                                                                             | 0/3125 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 301, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 290, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3318, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3363, in compute_loss
+    outputs = model(**inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 15, in wrapped_fn
+    ret_val = func(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 1852, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1141, in forward
+    outputs = self.model(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 944, in forward
+    layer_outputs = decoder_layer(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 693, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 253, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/JL/GMM/llama/gmmLinear.py", line 65, in forward
+    return F.linear(x,self.weight+(rearrange(self.weight, '(a r1) (b r2) -> a b r1 r2', r1 = self.r, r2 = self.r)@self.gbmm.reshape(self.in_features//self.r, self.r, -1)).reshape(*self.weight.shape))
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 23.65 GiB of which 45.69 MiB is free. Including non-PyTorch memory, this process has 23.59 GiB memory in use. Of the allocated memory 22.90 GiB is allocated by PyTorch, and 49.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 301, in <module>
+    train()
+  File "/home/rwkv/JL/GMM/llama/gmm.py", line 290, in train
+    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 1938, in train
+    return inner_training_loop(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 2279, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3318, in training_step
+    loss = self.compute_loss(model, inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/trainer.py", line 3363, in compute_loss
+    outputs = model(**inputs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 15, in wrapped_fn
+    ret_val = func(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 1852, in forward
+    loss = self.module(*inputs, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1141, in forward
+    outputs = self.model(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 944, in forward
+    layer_outputs = decoder_layer(
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 693, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 253, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/rwkv/miniconda3/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/rwkv/JL/GMM/llama/gmmLinear.py", line 65, in forward
+    return F.linear(x,self.weight+(rearrange(self.weight, '(a r1) (b r2) -> a b r1 r2', r1 = self.r, r2 = self.r)@self.gbmm.reshape(self.in_features//self.r, self.r, -1)).reshape(*self.weight.shape))
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB. GPU 0 has a total capacity of 23.65 GiB of which 45.69 MiB is free. Including non-PyTorch memory, this process has 23.59 GiB memory in use. Of the allocated memory 22.90 GiB is allocated by PyTorch, and 49.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
