@@ -1,4 +1,4 @@
-BASE_MODEL="/home/rwkv/JL/model/Gemma-2B"
+BASE_MODEL="/home/rwkv/JL/model/llama2-7b"
 OUTPUT_PATH="/home/rwkv/JL/out_model/llama-test"
 DATA_PATH="/home/rwkv/JL/model/MetaMathQA"
 
@@ -30,3 +30,4 @@ deepspeed --include=localhost:0 gmm.py \
     --lr_scheduler_type "cosine" \
     --report_to "wandb" \
     --merge True \
+    --run_name "pissa"

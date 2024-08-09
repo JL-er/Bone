@@ -87,6 +87,9 @@ if __name__ == "__main__":
     #PISSA
     parser.add_argument("--pissa_config", default='{"pissa_load":"", "pissa_init":"", "pissa_r":8, "svd_niter":4}', type=json.loads)
 
+    #Bone
+    parser.add_argument("--bone_config", default='{"bone_load":"", "bone_r":64}', type=json.loads)
+
 
     #quant
     parser.add_argument("--quant", default="none", type=str)

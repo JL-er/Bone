@@ -3,11 +3,8 @@ import torch.nn as nn
 from torch.nn import functional as F
 import functools
 from einops import rearrange
-GBMM_CONFIG = {
-    "g": 64,
-    "h": 64,
-    "parts": {"att", "ln", "time", "ffn"},
-    "gbmm": False,
+BONE_CONFIG = {
+    "r": 64,
 }
 
 # class GbmmLinear(nn.Module):
@@ -93,32 +90,21 @@ GBMM_CONFIG = {
 #         #w = w.transpose(1,2).reshape(*self.weight.shape)
 #         xx = torch.sum(F.linear(rearrange(x, 'b l (h d) -> b l h d', d = 64), self.gbmm),dim=-2)
 #         return F.linear(x, self.weight)+xx
-import torch.utils.checkpoint as checkpoint
 
-class GbmmLinear(nn.Module):
+class BoneLinear(nn.Module):
     def __init__(self, in_features: int, out_features: int, bias: bool):
         super().__init__()
         self.weight = nn.Parameter(torch.empty((out_features, in_features)))
         assert bias == False, "Biased QuantLinear not supported"
-        self.r = 32
-        self.gbmm = nn.Parameter(torch.zeros(out_features, self.r))
+        self.r = BONE_CONFIG["r"]
+        self.bone = nn.Parameter(torch.zeros(out_features, self.r))
         self.in_features = in_features
         self.out_features = out_features
-    
-    def bone(self):
-        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
-        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
-        return w
 
     def forward(self, x):
-        #w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)  #@
-        # w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.gbmm.reshape(self.out_features//self.r, self.r, -1)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
-        # w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
-        # return F.linear(x,self.weight+w)
-        # w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)+self.gbmm.reshape(self.out_features//self.r, self.r, -1)
-        # w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
-        w = checkpoint.checkpoint(self.bone, use_reentrant=False)
-        return F.linear(x, w)
+        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone.reshape(self.out_features//self.r, self.r, -1)+self.bone.reshape(self.out_features//self.r, self.r, -1)
+        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        return F.linear(x,self.weight+w)
     
 
 def get_nb_trainable_parameters(model) -> tuple[int, int]:
@@ -186,13 +172,13 @@ def get_gmm_model(model):
         if isinstance(sub_module, nn.Linear):
             #if 'proj' in name and 'k_proj' not in name and 'v_proj' not in name:
             if 'proj' in name :
-                gmm_linear = GbmmLinear(sub_module.in_features, sub_module.out_features, False)
+                gmm_linear = BoneLinear(sub_module.in_features, sub_module.out_features, False)
                 gmm_linear.weight = sub_module.weight
                 setattr(parent_module, target_key, gmm_linear)
     model.requires_grad_(False)
     for name, module in model.named_modules():
         for pname, param in module.named_parameters():
-            if 'gbmm' in pname:
+            if 'bone' in pname:
                 param.requires_grad = True
     for name, module in model.named_modules():
         for pname, param in module.named_parameters():

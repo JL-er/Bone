@@ -15,7 +15,7 @@ import datasets
 import numpy as np
 from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training, PeftModel
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
-from gmmLinear import GbmmLinear,get_gmm_model,print_trainable_parameters
+from gmmLinear import BoneLinear,get_gmm_model,print_trainable_parameters
 
 IGNORE_INDEX = -100
 EOT_TOKEN = "<|EOT|>"
@@ -55,6 +55,7 @@ class TrainingArguments(transformers.TrainingArguments):
     merge : Optional[bool] = field(default=False,metadata={"help": "Merge the PiSSA adapter to the residual model or LoRA to the base model"},)
     bf16: Optional[bool] = field(default=True)
     run_name: str= field(default='None', metadata={"help": "Path to the training data."})
+    use_bone: Optional[bool] = field(default=False)
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
@@ -180,6 +181,12 @@ def build_model(script_args, checkpoint_dir):
             logger.info('='*80)
     setattr(model, 'model_parallel', True)
     setattr(model, 'is_parallelizable', True)
+
+    if hasattr(model, "enable_input_require_grads"):
+        model.enable_input_require_grads()
+    else:
+        def make_inputs_require_grad(module, input, output):
+            output.requires_grad_(True)
     # Tokenizer
     
     if script_args.use_lora and script_args.bits < 16:
@@ -209,15 +216,12 @@ def build_model(script_args, checkpoint_dir):
             model = get_peft_model(model, peft_config)
     ###if script_args.use_gmm:
     print(model)
-    model = get_gmm_model(model)
-    # assert 1==2
-    # for name, module in model.named_modules():
-    #     for pname, param in module.named_parameters():
-    #             print(pname, param.requires_grad)
-    #     break
-    # for name, module in model.named_modules():
-    #     if 'norm' in name or 'gate' in name:
-    #         module = module.to(torch.float32)
+    if script_args.use_bone:
+        model = get_gmm_model(model)
+
+    for name, module in model.named_modules():
+        if 'norm' in name or 'gate' in name:
+            module = module.to(torch.float32)
     return model
 
 def train():
@@ -246,6 +250,7 @@ def train():
     logger.info("PAD Token:", tokenizer.pad_token, tokenizer.pad_token_id)
     logger.info("BOS Token", tokenizer.bos_token, tokenizer.bos_token_id)
     logger.info("EOS Token", tokenizer.eos_token, tokenizer.eos_token_id)
+
 
     if script_args.local_rank == 0:
         logger.info("Load tokenizer from {} over.".format(script_args.model_name_or_path))
