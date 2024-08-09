@@ -3,3 +3,4 @@ RWKV-PEFT/wandb/
 RWKV-PEFT/src/__pycache__/
 llama/__pycache__/
 llama/wandb/
+__pycache__/
