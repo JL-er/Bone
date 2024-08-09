@@ -1,0 +1,5 @@
+RWKV-PEFT/__pycache__/
+RWKV-PEFT/wandb/
+RWKV-PEFT/src/__pycache__/
+llama/__pycache__/
+llama/wandb/
