@@ -10,7 +10,7 @@ epoch_save=1
 epoch_steps=6171 #6171
 ctx_len=512
 
-lora_config='{"bone_load":"","bone_r":64}'
+bone_config='{"bone_load":"","bone_r":64}'
 
 
 python train.py --load_model $load_model \
@@ -22,5 +22,5 @@ python train.py --load_model $load_model \
 --accelerator gpu --devices 2 --precision bf16 --strategy deepspeed_stage_1 --grad_cp 1 \
 --my_testing "x060" \
 --dataload pad --loss_mask pad \
---peft gbmm --lora_config $bone_config --train_parts [] \
+--peft bone --bone_config $bone_config --train_parts [] \
 --wandb finetune
