@@ -186,3 +186,20 @@ def get_gmm_model(model):
         break
     print_trainable_parameters(model)
     return model
+
+import transformers
+#def merge_bone(model):
+def save_bone(trainer: transformers.Trainer, output_dir: str):
+    """Collects the state dict and dump to disk."""
+    state_dict = trainer.model.state_dict()
+    cpu_state_dict = {}
+    for key, value in state_dict.items():
+        #v = value.cpu()
+        if 'bone' in key :
+            cpu_state_dict[key] = value.cpu()
+    print(cpu_state_dict)
+    del state_dict
+    trainer._save(output_dir, state_dict=cpu_state_dict)
+    print(f"GPU memory allocated: {torch.cuda.memory_allocated()//1024**2} MB")
+    print(f"GPU memory reserved: {torch.cuda.memory_reserved()//1024**2} MB")
+

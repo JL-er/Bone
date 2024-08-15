@@ -56,6 +56,8 @@ class TrainingArguments(transformers.TrainingArguments):
     bf16: Optional[bool] = field(default=True)
     run_name: str= field(default='None', metadata={"help": "Path to the training data."})
     use_bone: Optional[bool] = field(default=False)
+    load_bone: Optional[str] = field(default="")
+
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
@@ -188,43 +190,38 @@ def build_model(script_args, checkpoint_dir):
         def make_inputs_require_grad(module, input, output):
             output.requires_grad_(True)
     # Tokenizer
-    
-    if script_args.use_lora and script_args.bits < 16:
-        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=script_args.gradient_checkpointing)
 
-    if script_args.use_lora:
-        if checkpoint_dir is not None:
-            logger.info(f"Loading adapters from {checkpoint_dir}.")
-            # os.path.join(checkpoint_dir, 'adapter_model')
-            model = PeftModel.from_pretrained(model, checkpoint_dir, is_trainable=True)
-        elif script_args.adapter_name_or_path is not None:
-            logger.info(f"Initilize adapters from {script_args.model_name_or_path}/{script_args.adapter_name_or_path}.")
-            lora_config = LoraConfig.from_pretrained(script_args.model_name_or_path, subfolder = script_args.adapter_name_or_path)
-            lora_config.lora_dropout = script_args.lora_dropout
-            model = PeftModel.from_pretrained(model, script_args.model_name_or_path, subfolder = script_args.adapter_name_or_path, is_trainable=True, config=lora_config)
-        else:
-            logger.info(f'Init LoRA modules...')
-            peft_config = LoraConfig(
-                task_type=TaskType.CAUSAL_LM,
-                target_modules=script_args.target_modules.split(','),
-                inference_mode=False,
-                r=script_args.lora_rank, 
-                lora_alpha=script_args.lora_alpha,
-                lora_dropout=script_args.lora_dropout,
-                init_lora_weights=script_args.init_lora_weights,
-            )
-            model = get_peft_model(model, peft_config)
     ###if script_args.use_gmm:
     print(model)
-    if script_args.use_bone:
-        model = get_gmm_model(model)
+
 
     for name, module in model.named_modules():
         if 'norm' in name or 'gate' in name:
             module = module.to(torch.float32)
     return model
+from einops import rearrange
+from safetensors import safe_open
+from safetensors.torch import load_file
 
-def train():
+def merge_bone(trainer: transformers.Trainer, bone_path,output_dir):
+    bone_dict = load_file(bone_path)
+    #print(bone_model)
+    state_dict = trainer.model.state_dict()
+    #bone_dict = bone_model.state_dict()
+    cpu_state_dict = {}
+    for key, value in state_dict.items():
+        #v = value.cpu()
+        if key.endswith('.weight') and 'embed' not in key:
+            prefix = key[:-len('.weight')]
+            bone_name = prefix + '.bone'
+            b,r = bone_dict[bone_name].shape
+            ww = rearrange(state_dict[key], '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@bone_dict[bone_name].reshape(b//r, r, r)+bone_dict[bone_name].reshape(b//r, r, r)
+            state_dict[key] += rearrange(ww, 'b a r1 r2 ->(a r1) (b r2) ')
+        cpu_state_dict[key] = state_dict[key]
+        
+    trainer._save(output_dir, state_dict=cpu_state_dict)
+
+def merge():
     parser = transformers.HfArgumentParser(TrainingArguments)
     script_args = parser.parse_args_into_dataclasses()[0]
     log_level = script_args.get_process_log_level()
@@ -258,52 +255,43 @@ def train():
     resume_from_checkpoint_dir = get_last_checkpoint(script_args.output_dir)
     model = build_model(script_args, resume_from_checkpoint_dir)
         
-    raw_train_datasets = load_dataset(script_args.data_path, split=script_args.dataset_split)
+    # raw_train_datasets = load_dataset(script_args.data_path, split=script_args.dataset_split)
 
-    if script_args.local_rank > 0: 
-        torch.distributed.barrier()
+    # if script_args.local_rank > 0: 
+    #     torch.distributed.barrier()
         
-    train_dataset = raw_train_datasets.map(
-        train_tokenize_function,
-        batched=True,
-        batch_size=3000,
-        num_proc=32,
-        remove_columns=raw_train_datasets.column_names,
-        load_from_cache_file=True,
-        desc="Running tokenizer on train dataset",
-        fn_kwargs={"tokenizer": tokenizer, "query": script_args.dataset_field[0], "response": script_args.dataset_field[1]}
-    )
+    # train_dataset = raw_train_datasets.map(
+    #     train_tokenize_function,
+    #     batched=True,
+    #     batch_size=3000,
+    #     num_proc=32,
+    #     remove_columns=raw_train_datasets.column_names,
+    #     load_from_cache_file=True,
+    #     desc="Running tokenizer on train dataset",
+    #     fn_kwargs={"tokenizer": tokenizer, "query": script_args.dataset_field[0], "response": script_args.dataset_field[1]}
+    # )
 
         
-    if script_args.local_rank == 0:
-        torch.distributed.barrier()
-        print(model)
-        #model.print_trainable_parameters()
-        print_trainable_parameters(model)
+    # if script_args.local_rank == 0:
+    #     torch.distributed.barrier()
+    #     print(model)
+    #     #model.print_trainable_parameters()
+    #     print_trainable_parameters(model)
 
-        logger.info("Training dataset samples:", len(train_dataset))
-        for index in random.sample(range(len(train_dataset)), 3):
-            logger.info(f"Sample {index} of the training set: {train_dataset[index]['input_ids']}, {train_dataset[index]['labels']}.")
-            logger.info(f"Sample {index} of the training set: {tokenizer.decode(list(train_dataset[index]['input_ids']))}.")
+    #     logger.info("Training dataset samples:", len(train_dataset))
+    #     for index in random.sample(range(len(train_dataset)), 3):
+    #         logger.info(f"Sample {index} of the training set: {train_dataset[index]['input_ids']}, {train_dataset[index]['labels']}.")
+    #         logger.info(f"Sample {index} of the training set: {tokenizer.decode(list(train_dataset[index]['input_ids']))}.")
 
-    data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
-    data_module = dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
+    # data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
+    # data_module = dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
+    data_module = None
+    trainer = Trainer(model=model, tokenizer=tokenizer, args=script_args)
 
-    trainer = Trainer(model=model, tokenizer=tokenizer, args=script_args, **data_module)
-    if script_args.use_lora:
-        trainer.add_callback(SavePeftModelCallback)
-    trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
-    trainer.save_state()
-    if script_args.use_lora and script_args.merge:
-        model = model.merge_and_unload()
-        model.save_pretrained(script_args.output_dir)
-        tokenizer.save_pretrained(script_args.output_dir)
-    if not script_args.use_lora and not script_args.use_bone:
-        safe_save_model_for_hf_trainer(trainer=trainer, output_dir=script_args.output_dir)
-    if script_args.use_bone:
-        print(1111111111111)
-        save_bone(trainer=trainer, output_dir=script_args.output_dir)
-        
+    merge_bone(trainer=trainer, bone_path=script_args.load_bone,output_dir=script_args.output_dir)
+    #safe_save_model_for_hf_trainer(trainer=trainer, output_dir=script_args.output_dir)
+    
 
 if __name__ == "__main__":
-    train()
+    merge()
+
