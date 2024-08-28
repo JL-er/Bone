@@ -15,7 +15,7 @@ import datasets
 import numpy as np
 from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training, PeftModel
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
-from gmmLinear import BoneLinear,get_gmm_model,print_trainable_parameters,save_bone
+from Bone.llama.boneLinear import BoneLinear,get_gmm_model,print_trainable_parameters,save_bone
 
 IGNORE_INDEX = -100
 EOT_TOKEN = "<|EOT|>"
