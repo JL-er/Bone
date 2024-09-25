@@ -3,6 +3,7 @@
   <img src="./assets/llama2-7b.png" width="45%" />
   <img src="./assets/bone-col.png" width="45%" /> 
 </p>
+
 ## How to Run
 ### HF Model
 ```
