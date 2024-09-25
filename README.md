@@ -4,6 +4,10 @@
   <img src="./assets/bone-col.png" width="45%" /> 
 </p>
 
+<p>
+  <img src="./assets/score.png" />
+</p>
+
 ## How to Run
 ### HF Model
 ```
@@ -17,6 +21,9 @@ cd RWKV-PEFT
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
+
+## Flash-Bone
+coming soon!!!
 
 
 # Citation
