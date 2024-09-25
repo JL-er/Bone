@@ -1,6 +1,5 @@
 # Bone: BLOCK AFFINE OF LARGE LANGUAGE MODELS
-![Loss](./assets/llama2-7b.png)
-![Bone](./assets/bone-col.png)
+![Loss](./assets/llama2-7b.png)![Bone](./assets/bone-col.png)
 ## How to Run
 ### HF Model
 ```
