@@ -54,6 +54,20 @@ only仅支持bsz=1的情况，为了ctx_len设置为采样最大长度，当前�
 ```
 --loss_mask qa/pad
 ```
+- strategy
+deepspeed显存内存分配策略,优先使用1，当模型较大或者全量微调时则使用2/3 如果仍爆显存则使用offload，3可以模型并行（一个模型被切分在多卡上）
+deepspeed_stage_1
+deepspeed_stage_2
+deepspeed_stage_2_offload
+deepspeed_stage_3
+deepspeed_stage_3_offload
+```
+deepspeed_stage_1
+```
+- ctx_len
+采样训练长度，根据数据长度进行调整，ctx_len增大显存也会随之增大
+- micro_bsz
+
 
 ## LoRA
 

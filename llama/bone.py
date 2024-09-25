@@ -15,7 +15,7 @@ import datasets
 import numpy as np
 from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training, PeftModel
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
-from boneLinear import BoneLinear,get_gmm_model,print_trainable_parameters,save_bone
+from boneLinear import BoneLinear,get_gmm_model,print_trainable_parameters,save_bone,BONE_CONFIG
 
 IGNORE_INDEX = -100
 EOT_TOKEN = "<|EOT|>"
@@ -36,7 +36,7 @@ class TrainingArguments(transformers.TrainingArguments):
     # Lora or PiSSA setting
     use_lora : Optional[bool] = field(default=False)
     adapter_name_or_path: Optional[str] = field(default=None,metadata={"help": ("Pre-initialized PiSSA adapter path; when this is not None, the following arguments are ignored."),},)
-    init_lora_weights: Literal[True, "pissa_niter_4"] = field(default=True,metadata={"help": ("True -> LoRA; `pissa` -> PiSSA"),},)
+    init_lora_weights: Literal[True, "pissa_niter_4", "olora"] = field(default=True,metadata={"help": ("True -> LoRA; `pissa` -> PiSSA"),},)
     target_modules : Optional[str] = field(default="q_proj,v_proj,k_proj,o_proj,gate_proj,down_proj,up_proj")
     lora_rank : Optional[int] = field(default=8)
     lora_alpha : Optional[float] = field(default=32.)
@@ -56,6 +56,7 @@ class TrainingArguments(transformers.TrainingArguments):
     bf16: Optional[bool] = field(default=True)
     run_name: str= field(default='None', metadata={"help": "Path to the training data."})
     use_bone: Optional[bool] = field(default=False)
+    bone_b: Optional[int] = field(default=64)
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
@@ -217,6 +218,7 @@ def build_model(script_args, checkpoint_dir):
     ###if script_args.use_gmm:
     print(model)
     if script_args.use_bone:
+        BONE_CONFIG['r'] = script_args.bone_b
         model = get_gmm_model(model)
 
     for name, module in model.named_modules():
@@ -301,7 +303,6 @@ def train():
     if not script_args.use_lora and not script_args.use_bone:
         safe_save_model_for_hf_trainer(trainer=trainer, output_dir=script_args.output_dir)
     if script_args.use_bone:
-        print(1111111111111)
         save_bone(trainer=trainer, output_dir=script_args.output_dir)
         
 

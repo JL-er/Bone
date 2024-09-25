@@ -35,13 +35,37 @@ with torch.no_grad():
             prefix = k[:-len('.weight')]
             gbmm = prefix + '.bone'
             
-            if gbmm in keys:
+            # if gbmm in keys:  ##old
+            #     w[k] = w[k].to(device=device)
+            #     w[gbmm] = w[gbmm].to(device=device)
+            #     b,r = w[gbmm].shape
+
+            #     bone = rearrange(w[k], '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@w[gbmm].reshape(b//r, r, r)+w[gbmm].reshape(b//r, r, r)
+            #     w[k] += rearrange(bone, 'b a r1 r2 ->(a r1) (b r2) ')
+
+            #     output_w[k] = w[k].to(device='cpu', copy=True)
+            #     del w[k]
+            #     del w[gbmm]
+            #     continue
+
+            # if gbmm in keys: ### col
+            #     w[k] = w[k].to(device=device)
+            #     w[gbmm] = w[gbmm].to(device=device)
+            #     b,r,_ = w[gbmm].shape
+            #     bone = rearrange(w[k], '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@w[gbmm]+w[gbmm]
+            #     w[k] += rearrange(bone, 'b a r1 r2 ->(a r1) (b r2) ')
+
+            #     output_w[k] = w[k].to(device='cpu', copy=True)
+            #     del w[k]
+            #     del w[gbmm]
+            #     continue
+
+            if gbmm in keys: ### row
                 w[k] = w[k].to(device=device)
                 w[gbmm] = w[gbmm].to(device=device)
-                b,r = w[gbmm].shape
-
-                bone = rearrange(w[k], '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@w[gbmm].reshape(b//r, r, r)+w[gbmm].reshape(b//r, r, r)
-                w[k] += rearrange(bone, 'b a r1 r2 ->(a r1) (b r2) ')
+                b,r,_ = w[gbmm].shape
+                bone = rearrange(w[k], '(a r1) (b r2) -> a b r1 r2', r1 = r, r2 = r)@w[gbmm]+w[gbmm]
+                w[k] += rearrange(bone, 'a b r1 r2 ->(a r1) (b r2) ')
 
                 output_w[k] = w[k].to(device='cpu', copy=True)
                 del w[k]

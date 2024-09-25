@@ -211,11 +211,24 @@ def merge_bone(trainer: transformers.Trainer, bone_path,output_dir):
     cpu_state_dict = {}
     for key, value in state_dict.items():
         #v = value.cpu()
-        if key.endswith('.weight') and 'pro'  in key:
+        # if key.endswith('.weight') and 'pro'  in key:  ###old
+        #     prefix = key[:-len('.weight')]
+        #     bone_name = prefix + '.bone'
+        #     b,r = bone_dict[bone_name].shape
+        #     ww = rearrange(state_dict[key].to(torch.bfloat16), '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@bone_dict[bone_name].reshape(b//r, r, r)+bone_dict[bone_name].reshape(b//r, r, r)
+        #     state_dict[key] += rearrange(ww, 'b a r1 r2 ->(a r1) (b r2) ')
+        # cpu_state_dict[key] = state_dict[key]
+        # if key.endswith('.weight') and 'pro'  in key:  ###Bone-row
+        #     prefix = key[:-len('.weight')]
+        #     bone_name = prefix + '.bone'
+        #     b,r,_ = bone_dict[bone_name].shape
+        #     ww = rearrange(state_dict[key].to(torch.bfloat16), '(a r1) (b r2) -> a b r1 r2', r1 = r, r2 = r)@bone_dict[bone_name]+bone_dict[bone_name]
+        #     state_dict[key] += rearrange(ww, 'a b r1 r2 ->(a r1) (b r2) ')
+        if key.endswith('.weight') and 'pro'  in key:  ###Bone-col
             prefix = key[:-len('.weight')]
             bone_name = prefix + '.bone'
-            b,r = bone_dict[bone_name].shape
-            ww = rearrange(state_dict[key].to(torch.bfloat16), '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@bone_dict[bone_name].reshape(b//r, r, r)+bone_dict[bone_name].reshape(b//r, r, r)
+            b,r,_ = bone_dict[bone_name].shape
+            ww = rearrange(state_dict[key].to(torch.bfloat16), '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@bone_dict[bone_name]+bone_dict[bone_name]
             state_dict[key] += rearrange(ww, 'b a r1 r2 ->(a r1) (b r2) ')
         cpu_state_dict[key] = state_dict[key]
         print(key)

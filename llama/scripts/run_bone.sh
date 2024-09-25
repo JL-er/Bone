@@ -3,7 +3,7 @@ OUTPUT_PATH="/home/rwkv/JL/out_model/bone-test"
 DATA_PATH="/home/rwkv/JL/model/MetaMathQA"
 
 # batch size = per_device_train_batch_size * gradient_accumulation_steps * num_gpus = 128
-deepspeed --include=localhost:0 gmm.py \
+deepspeed --include=localhost:0 bone.py \
     --deepspeed configs/ds_config_zero2_no_offload.json \
     --model_name_or_path $BASE_MODEL \
     --data_path $DATA_PATH \
