@@ -356,6 +356,11 @@ def flash_bone(x,w,b):
     o = BoneTriton.apply(x,w,b)
     return o
 
+def bone(x,w,b):
+    ww = rearrange(w, '(a r1) (b r2) -> a b r1 r2', r1 = 64 , r2 = 64 )@b+b
+    ww= rearrange(ww, 'a b r1 r2 ->(a r1) (b r2) ')+w
+    return x@ww
+
 
 import torch
 from torch.autograd import gradcheck
@@ -381,9 +386,9 @@ da, a.grad = a.grad.clone(), None
 dc, c.grad = c.grad.clone(), None
 
 
-w = rearrange(b, '(a r1) (b r2) -> a b r1 r2', r1 = 64 , r2 = 64 )@c+c
-ww= rearrange(w, 'a b r1 r2 ->(a r1) (b r2) ')+b
-o1 = a@ww
+# w = rearrange(b, '(a r1) (b r2) -> a b r1 r2', r1 = 64 , r2 = 64 )@c+c
+# ww= rearrange(w, 'a b r1 r2 ->(a r1) (b r2) ')+b
+o1 = bone(a,b,c)
 o1.backward(do)
 
 
