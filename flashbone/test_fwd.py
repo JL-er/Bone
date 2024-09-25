@@ -14,18 +14,29 @@ from fla.utils import contiguous
 
 
 
-# @triton.autotune(
-#     configs=[
-#         #triton.Config({'BM': 128, 'BK': 64, 'BN': 256, 'G': 4}, num_stages=3, num_warps=8),
-#         #triton.Config({'BM': 64, 'BK': 32, 'BN': 256, 'G': 4}, num_stages=4, num_warps=4),
-#         # triton.Config({'BM': 128, 'BK': 32, 'BN': 128, 'G': 4}, num_stages=4, num_warps=4),
-#         #triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
-#         #triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
-#         triton.Config({'BM': 512, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=1, num_warps=8),
-#         #triton.Config({'BM': 512, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
-#     ],
-#     key=['M', 'N', 'K'],
-# )
+@triton.autotune(
+    configs=[
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+    ],
+    key=['M', 'N', 'K'],
+)
 
 @triton.jit
 def matmul_kernel(
@@ -127,11 +138,11 @@ def bone_fwd(
     c = a.new_empty(M, N)
     # print(c.shape,c.dtype)
     # print(N//64)
-    BM=64
-    BK=BN = 64
+    # BM=64
+    # BK=BN = 64
 
-    grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
-    #def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, meta['BN']))
+    #grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
+    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, meta['BN']))
     matmul_kernel[grid](
         a, b, c, bone, 
         M, N, K,
@@ -139,8 +150,8 @@ def bone_fwd(
         b.stride(0), b.stride(1),
         c.stride(0), c.stride(1),
         bone.stride(0), bone.stride(1), bone.stride(2),
-        BM=BM,BK=BK,BN=BN,G=4,
-        num_stages=2,
+        # BM=BM,BK=BK,BN=BN,G=4,
+        # num_stages=2,
         ACTIVATION=None,
     )
     return c
@@ -178,9 +189,9 @@ def bone_fwd(
 import time
 #torch.manual_seed(0)
 dtype = torch.bfloat16
-a = torch.randn((512,2560),device='cuda', dtype=dtype)
-b = torch.randn((2560,2560),device='cuda', dtype=dtype)
-c = torch.randn((40,64,64),device='cuda', dtype=dtype)
+a = torch.randn((512,4096),device='cuda', dtype=dtype)
+b = torch.randn((4096,4096),device='cuda', dtype=dtype)
+c = torch.randn((64,64,64),device='cuda', dtype=dtype)
 
 lora_a = torch.randn((32,4096),device='cuda', dtype=dtype)
 lora_b = torch.randn((4096,32),device='cuda', dtype=dtype)
@@ -199,7 +210,7 @@ e = a@(w+b)
 print(e)
 close = torch.allclose(xx, e, rtol=1e-05, atol=1e-08, equal_nan=False)
 print(close, xx-e)
-torch.testing.assert_close(xx, e, rtol=0, atol=1e-4)
+torch.testing.assert_close(xx, e, rtol=0, atol=1e-8)
 
 # e = torch.addbmm(c,b,a)
 # print(e)

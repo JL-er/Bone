@@ -396,12 +396,12 @@ torch.manual_seed(49)
 
 # 创建输入张量
 dtype=torch.float32
-a = torch.randn((512,64*2), dtype=dtype, requires_grad=True, device='cuda')
+a = torch.randn((2048,64*2), dtype=dtype, requires_grad=True, device='cuda')
 
 b = torch.randn((2,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 c = torch.randn((8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 e = torch.randn((128,128), dtype=dtype, requires_grad=True, device='cuda')
-do = torch.randn((512,512), dtype=dtype, requires_grad=True, device='cuda')
+do = torch.randn((2048,512), dtype=dtype, requires_grad=True, device='cuda')
 do1 = do.clone()
 # o = bone(a,b,c)
 # #o = torch.einsum('abjk,bkl->abjl', b, c)

@@ -1,15 +1,18 @@
 # Bone: BLOCK AFFINE OF LARGE LANGUAGE MODELS
 ![Loss](./assets/llama2-7b.png)
+![Bone](./assets/bone-col.png)
 ## How to Run
 ### HF Model
 ```
 cd llama
 sh scripts/run_bone.sh
+sh scripts/merge_bone.sh
 ```
 ### RWKV Model
 ```
 cd RWKV-PEFT
 sh scripts/run_bone.sh
+sh scripts/merge_bone.sh
 ```
 
 
