@@ -4,7 +4,29 @@ import triton
 import triton.language as tl
 
 
-
+# @triton.autotune(
+#     configs=[
+#         triton.Config({'BM': 64}, num_stages=2, num_warps=2),
+#         triton.Config({'BM': 64}, num_stages=2, num_warps=4),
+#         triton.Config({'BM': 64}, num_stages=2, num_warps=8),
+#         triton.Config({'BM': 128}, num_stages=2, num_warps=2),
+#         triton.Config({'BM': 128}, num_stages=2, num_warps=4),
+#         triton.Config({'BM': 128}, num_stages=2, num_warps=8),
+#         triton.Config({'BM': 64}, num_stages=4, num_warps=2),
+#         triton.Config({'BM': 64}, num_stages=4, num_warps=4),
+#         triton.Config({'BM': 64}, num_stages=4, num_warps=8),
+#         triton.Config({'BM': 128}, num_stages=4, num_warps=2),
+#         triton.Config({'BM': 128}, num_stages=4, num_warps=4),
+#         triton.Config({'BM': 128}, num_stages=4, num_warps=8),
+#         triton.Config({'BM': 256}, num_stages=2, num_warps=2),
+#         triton.Config({'BM': 256}, num_stages=2, num_warps=4),
+#         triton.Config({'BM': 256}, num_stages=2, num_warps=8),
+#         triton.Config({'BM': 256}, num_stages=4, num_warps=2),
+#         triton.Config({'BM': 256}, num_stages=4, num_warps=4),
+#         triton.Config({'BM': 256}, num_stages=4, num_warps=8),
+#     ],
+#     key=['M', 'N', 'K'],
+# )
 @triton.jit
 def bone_gradx(
     # Pointers to matrices
@@ -227,8 +249,8 @@ def bone_gradwb(
         b_dw = tl.zeros((BM, BN), dtype=tl.float32)
         for k in range(0, tl.cdiv(K, BK)):
 
-            b_a = tl.load(p_a, mask=(o_k[None, :] < K - k * BK)&(o_m[:, None] < M - m * BM), other=0.0).to(tl.float32)
-            b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0).to(tl.float32)
+            b_a = tl.load(p_a, mask=(o_k[None, :] < K - k * BK)&(o_m[:, None] < M - m * BM), other=0.0)
+            b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
 
             b_dw += tl.dot(b_a, b_b, allow_tf32=False)
             # Advance the ptrs to the next K block.
@@ -240,9 +262,9 @@ def bone_gradwb(
         p_w += BM * s_wm
         p_a -= K * s_ak
         p_b -= K * s_bk
-        dc = tl.dot(b_w.T, b_dw, allow_tf32=False)
+        #dc = tl.dot(b_w.T, b_dw, allow_tf32=False)
 
-        #dc +=b_dw
+        dc +=b_dw
         #dc =dc.to(b_dw.dtype)+b_dw.to(b_dw.dtype)
 
 
@@ -264,11 +286,10 @@ def bone_bwd(
     _,block,_ =bone.shape
     # Allocates output.
     c = a.new_empty(M, N)
-    BM=64
     BK=BN = block
 
 
-    grid= (triton.cdiv(M, BM), triton.cdiv(N, BN))
+    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, BN))
     bone_gradx[grid](
         a, b, c, bone, 
         M, N, K,
@@ -276,8 +297,7 @@ def bone_bwd(
         b.stride(0), b.stride(1),
         c.stride(0), c.stride(1),
         bone.stride(0), bone.stride(1), bone.stride(2),
-        BM=BM,BK=BK,BN=BN,G=4,
-        num_stages=1,
+        BK=BK,BN=BN,G=4,
         ACTIVATION=None,
     )
     return c
@@ -390,18 +410,19 @@ def bone(a,b, c):
     o = CustomEinsum.apply(a, b,c)
     return o
 
+
 import torch
 from torch.autograd import gradcheck
 torch.manual_seed(49)
 
 # 创建输入张量
-dtype=torch.float32
-a = torch.randn((2048,64*2), dtype=dtype, requires_grad=True, device='cuda')
+dtype=torch.bfloat16
+a = torch.randn((64,64*1), dtype=dtype, requires_grad=True, device='cuda')
 
-b = torch.randn((2,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
+b = torch.randn((1,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 c = torch.randn((8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 e = torch.randn((128,128), dtype=dtype, requires_grad=True, device='cuda')
-do = torch.randn((2048,512), dtype=dtype, requires_grad=True, device='cuda')
+do = torch.randn((64,512), dtype=dtype, requires_grad=True, device='cuda')
 do1 = do.clone()
 # o = bone(a,b,c)
 # #o = torch.einsum('abjk,bkl->abjl', b, c)
@@ -424,11 +445,11 @@ dw = rearrange(dw, '(a r1) (b r2) -> a b r1 r2 ', r1=64,r2=64)
 #dcc = torch.einsum('abjl,abjk->bkl', dw, b)
 # print('dc',dcc.reshape(-1))
 #tc  = torch.sum(b.transpose(2,3)@dw, dim=0)
-tc = (b.transpose(2,3)@dw)[-1]
-#tc = torch.sum(dw, dim=0)
+#tc = (b.transpose(2,3)@dw)[-1]
+tc = torch.sum(dw, dim=0)
 print(tc.reshape(-1))
-print(dw[0].reshape(-1))
-print(dw[1].reshape(-1))
+# print(dw[0].reshape(-1))
+# print(dw[1].reshape(-1))
 
 bb = rearrange(b, 'a b r1 r2 ->(a r1) (b r2) ')
 aa = a.t()

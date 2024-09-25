@@ -14,26 +14,50 @@ from fla.utils import contiguous
 
 
 
+# @triton.autotune(
+#     configs=[
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+#         triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+#         triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+#         triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+#         triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+#         triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+#         triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+#         # triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
+#         # triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+#     ],
+#     key=['M', 'N', 'K'],
+# )
+
 @triton.autotune(
     configs=[
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 64, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 128, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 256, 'BK': 64, 'BN': 64, 'G': 4}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 128}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 128}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 128}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 256}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 256}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 256}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 256}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 256}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 256}, num_stages=4, num_warps=8),
     ],
     key=['M', 'N', 'K'],
 )
@@ -139,10 +163,10 @@ def bone_fwd(
     # print(c.shape,c.dtype)
     # print(N//64)
     # BM=64
-    # BK=BN = 64
+    BK=BN = 64
 
     #grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
-    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, meta['BN']))
+    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, BN))
     matmul_kernel[grid](
         a, b, c, bone, 
         M, N, K,
@@ -150,8 +174,7 @@ def bone_fwd(
         b.stride(0), b.stride(1),
         c.stride(0), c.stride(1),
         bone.stride(0), bone.stride(1), bone.stride(2),
-        # BM=BM,BK=BK,BN=BN,G=4,
-        # num_stages=2,
+        BK=BK,BN=BN,G=4,
         ACTIVATION=None,
     )
     return c
@@ -189,7 +212,7 @@ def bone_fwd(
 import time
 #torch.manual_seed(0)
 dtype = torch.bfloat16
-a = torch.randn((512,4096),device='cuda', dtype=dtype)
+a = torch.randn((1024,4096),device='cuda', dtype=dtype)
 b = torch.randn((4096,4096),device='cuda', dtype=dtype)
 c = torch.randn((64,64,64),device='cuda', dtype=dtype)
 
@@ -229,7 +252,7 @@ for i in range(100):
     xxx = a@(b+lora_b@lora_a)
 torch.cuda.synchronize()
 e = time.time()
-print('lora navie ', (e-s)/100)
+print('lora       ', (e-s)/100)
 
 s = time.time()
 for i in range(100):
