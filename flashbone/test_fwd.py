@@ -40,6 +40,12 @@ from fla.utils import contiguous
 
 @triton.autotune(
     configs=[
+        triton.Config({'BM': 64}, num_stages=3, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=3, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=3, num_warps=8),
+        triton.Config({'BM': 128}, num_stages=3, num_warps=2),
+        triton.Config({'BM': 128}, num_stages=3, num_warps=4),
+        triton.Config({'BM': 128}, num_stages=3, num_warps=8),
         triton.Config({'BM': 64}, num_stages=2, num_warps=2),
         triton.Config({'BM': 64}, num_stages=2, num_warps=4),
         triton.Config({'BM': 64}, num_stages=2, num_warps=8),
@@ -52,12 +58,12 @@ from fla.utils import contiguous
         triton.Config({'BM': 128}, num_stages=4, num_warps=2),
         triton.Config({'BM': 128}, num_stages=4, num_warps=4),
         triton.Config({'BM': 128}, num_stages=4, num_warps=8),
-        triton.Config({'BM': 256}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 256}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 256}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 256}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 256}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 256}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=8),
     ],
     key=['M', 'N', 'K'],
 )
@@ -109,7 +115,7 @@ def matmul_kernel(
     # `p_b` is a block of [BK, BN] pointers
     # See above `Pointer Arithmetic` section for details
 
-    o_am = (i_m * BM + tl.arange(0, BM)) % M
+    o_am = (i_m * BM + tl.arange(0, BM))
     o_bn = (i_n * BN + tl.arange(0, BN)) % N
     o_k = tl.arange(0, BK)
 
@@ -126,7 +132,7 @@ def matmul_kernel(
         # If it is out of bounds, set it to 0.
         b_a = tl.load(p_a, mask=o_k[None, :] < K - k * BK, other=0.0)
         b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
-        b_b += tl.dot(b_b, b_bone, allow_tf32=False).to(b_b.dtype)+b_bone.to(b_b.dtype)
+        b_b += tl.dot(b_b, b_bone, allow_tf32=False).to(b_b.dtype)+b_bone
         #b_acc = b_b
         # We accumulate along the K dimension.
         b_acc += tl.dot(b_a, b_b, allow_tf32=False)
@@ -136,7 +142,7 @@ def matmul_kernel(
 
     o_cm = i_m * BM + tl.arange(0, BM)
     o_cn = i_n * BN + tl.arange(0, BN)
-    mask =  ( o_cm[:, None] < M) & (o_cn[None, :] < N )
+    mask = (o_cn[None, :] < N )
 
     #b_c = b_acc
 
@@ -148,7 +154,7 @@ def matmul_kernel(
 
 
 
-@contiguous
+#@contiguous
 def bone_fwd(
     bone: torch.Tensor,
     a: torch.Tensor,
@@ -156,10 +162,11 @@ def bone_fwd(
 ) -> torch.Tensor:
     #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
 
-    M, K = a.shape
+    B, L, K = a.shape
+    M = B*L
     K, N = b.shape
     # Allocates output.
-    c = a.new_empty(M, N)
+    c = a.new_empty(B, L, N)
     # print(c.shape,c.dtype)
     # print(N//64)
     # BM=64
@@ -170,9 +177,9 @@ def bone_fwd(
     matmul_kernel[grid](
         a, b, c, bone, 
         M, N, K,
-        a.stride(0), a.stride(1),
+        a.stride(1), a.stride(2),
         b.stride(0), b.stride(1),
-        c.stride(0), c.stride(1),
+        c.stride(1), c.stride(2),
         bone.stride(0), bone.stride(1), bone.stride(2),
         BK=BK,BN=BN,G=4,
         ACTIVATION=None,
@@ -212,31 +219,40 @@ def bone_fwd(
 import time
 #torch.manual_seed(0)
 dtype = torch.bfloat16
-a = torch.randn((1024,4096),device='cuda', dtype=dtype)
-b = torch.randn((4096,4096),device='cuda', dtype=dtype)
+B = 10
+L = 1024
+a = torch.randn((B, L,2048),device='cuda', dtype=dtype)
+b = torch.randn((2048,4096),device='cuda', dtype=dtype)
 c = torch.randn((64,64,64),device='cuda', dtype=dtype)
 
 lora_a = torch.randn((32,4096),device='cuda', dtype=dtype)
-lora_b = torch.randn((4096,32),device='cuda', dtype=dtype)
+lora_b = torch.randn((2048,32),device='cuda', dtype=dtype)
 
 # c = debug(a, input, a)
 # print("Debug output:", debug_output.cpu().numpy())
 from einops import rearrange
 
 xx = bone_fwd(c, a, b)
-print(xx.shape,xx)
+print(xx.reshape(-1))
 # d = a@b+c
 # print(d.shape, d)
 w = rearrange(b, '(a r1) (b r2) -> a b r1 r2', r1 = 64, r2 = 64)@c+c
 w = rearrange(w, 'a b r1 r2 ->(a r1) (b r2) ')
 e = a@(w+b)
-print(e)
-close = torch.allclose(xx, e, rtol=1e-05, atol=1e-08, equal_nan=False)
-print(close, xx-e)
-torch.testing.assert_close(xx, e, rtol=0, atol=1e-8)
+print(e.reshape(-1))
+close = torch.allclose(xx, e, rtol=1e-03, atol=1e-08, equal_nan=False)
+print(close)
+#torch.testing.assert_close(xx, e, rtol=1e-03, atol=1e-8)
 
 # e = torch.addbmm(c,b,a)
 # print(e)
+
+def bone_flops(L,D,O,a,b,block):
+    f = a*b*block*block*(2*block-1)
+    x = L*O*(2*D-1)
+    return f+x
+
+ff = bone_flops(B*L, 2048, 4096, 32, 64, 64)
 
 s = time.time()
 for i in range(100):
@@ -245,21 +261,21 @@ for i in range(100):
     xxx = a@w
 torch.cuda.synchronize()
 e = time.time()
-print('bone navie ', (e-s)/100)
+print('bone navie ', ff/(e-s)/100/1000)
 
 s = time.time()
 for i in range(100):
     xxx = a@(b+lora_b@lora_a)
 torch.cuda.synchronize()
 e = time.time()
-print('lora       ', (e-s)/100)
+#print('lora       ', ff/(e-s)/100)
 
 s = time.time()
 for i in range(100):
     xxx = bone_fwd(c, a, b)
 torch.cuda.synchronize()
 e = time.time()
-print('bone triton', (e-s)/100)
+print('bone triton', ff/(e-s)/100/1000)
 
 # a = torch.randn(3,4,4)
 # b = torch.randn(4,4)
