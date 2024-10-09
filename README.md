@@ -36,7 +36,7 @@ class BoneLinear(nn.Module):#Bone-col
         self.bone = nn.Parameter(torch.zeros(out_features//self.r, self.r, self.r))
     
     def forward(self, x):
-        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone_A+self.bone_B
+        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone+self.bone
         w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
         return F.linear(x,self.weight+w)
 ```
