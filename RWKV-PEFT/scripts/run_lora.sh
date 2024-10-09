@@ -7,7 +7,7 @@ n_embd=2560
 
 micro_bsz=1
 epoch_save=1
-epoch_steps=6171 #6171
+epoch_steps=200 #6171
 ctx_len=512
 
 lora_config='{"lora_load":"","lora_r":32,"lora_alpha":32,"lora_dropout":0.0,"lora_parts":"att,ffn"}'

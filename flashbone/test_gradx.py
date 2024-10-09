@@ -6,24 +6,27 @@ import triton.language as tl
 
 @triton.autotune(
     configs=[
-        triton.Config({'BM': 64}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 64}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 64}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 128}, num_stages=2, num_warps=2),
-        triton.Config({'BM': 128}, num_stages=2, num_warps=4),
-        triton.Config({'BM': 128}, num_stages=2, num_warps=8),
-        triton.Config({'BM': 64}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 64}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 64}, num_stages=4, num_warps=8),
-        triton.Config({'BM': 128}, num_stages=4, num_warps=2),
-        triton.Config({'BM': 128}, num_stages=4, num_warps=4),
-        triton.Config({'BM': 128}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 64}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 64}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 64}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=8),
         triton.Config({'BM': 256}, num_stages=2, num_warps=2),
         triton.Config({'BM': 256}, num_stages=2, num_warps=4),
         triton.Config({'BM': 256}, num_stages=2, num_warps=8),
         triton.Config({'BM': 256}, num_stages=4, num_warps=2),
         triton.Config({'BM': 256}, num_stages=4, num_warps=4),
         triton.Config({'BM': 256}, num_stages=4, num_warps=8),
+        triton.Config({'BM': 256}, num_stages=1, num_warps=2),
+        triton.Config({'BM': 256}, num_stages=1, num_warps=4),
+        triton.Config({'BM': 256}, num_stages=1, num_warps=8),
     ],
     key=['M', 'N', 'K'],
 )
@@ -74,7 +77,7 @@ def bone_gradx(
     # `p_b` is a block of [BK, BN] pointers
     # See above `Pointer Arithmetic` section for details
 
-    o_am = (i_m * BM + tl.arange(0, BM)) % M
+    o_am = (i_m * BM + tl.arange(0, BM))
     o_bn = (i_n * BN + tl.arange(0, BN)) % N
     o_k = tl.arange(0, BK)
 
@@ -91,10 +94,10 @@ def bone_gradx(
         b_bone = tl.load(p_bone)
         b_a = tl.load(p_a, mask=o_k[None, :] < K - k * BK, other=0.0)
         b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
-        b_bone = tl.dot(b_bone,b_b, allow_tf32=False).to(b_b.dtype)+b_bone
+        b_b += tl.dot(b_bone,b_b, allow_tf32=False).to(b_b.dtype)+b_bone
 
 
-        b_b = b_b+b_bone
+        #b_b = b_b+b_bone
         #b_acc = b_b
         # We accumulate along the K dimension.
         b_acc += tl.dot(b_a, b_b, allow_tf32=False)
@@ -113,29 +116,33 @@ def bone_gradx(
 
     tl.store(p_c, b_acc.to(c.dtype.element_ty) )
 
+
+
+
 def bone_bwd(
-    a: torch.Tensor,
+    do: torch.Tensor,
     b: torch.Tensor,
     bone: torch.Tensor,
 
 ) -> torch.Tensor:
     #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
 
-    M, K = a.shape
+    B, L, K = do.shape
+    M = B*L
     K, N = b.shape
     _,block,_ =bone.shape
     # Allocates output.
-    c = a.new_empty(M, N)
+    c = do.new_empty(B, L, N)
     BK=BN = block
 
 
     def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, BN))
     bone_gradx[grid](
-        a, b, c, bone, 
+        do, b, c, bone, 
         M, N, K,
-        a.stride(0), a.stride(1),
+        do.stride(1), do.stride(2),
         b.stride(0), b.stride(1),
-        c.stride(0), c.stride(1),
+        c.stride(1), c.stride(2),
         bone.stride(0), bone.stride(1), bone.stride(2),
         BK=BK,BN=BN,G=4,
         ACTIVATION=None,
@@ -150,20 +157,22 @@ def bone(a,b, c):
     return o
 
 def gradx(do, ww):
-    dx = torch.einsum('lo,do->ld', do, ww)
+    dx = torch.einsum('blo,do->bld', do, ww)
     return dx
 
 import torch
 from torch.autograd import gradcheck
 import time
 # 创建输入张量
+torch.manual_seed(0)
 dtype=torch.bfloat16
-a = torch.randn((2048,64*40), dtype=dtype, requires_grad=True, device='cuda')
+B = 16
+#a = torch.randn((B, 512,64*40), dtype=dtype, requires_grad=True, device='cuda')
 
-b = torch.randn((40,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
-c = torch.randn((8,64,64), dtype=dtype, requires_grad=True, device='cuda')
+b = torch.randn((40,64,64,64), dtype=dtype, requires_grad=True, device='cuda')
+c = torch.randn((64,64,64), dtype=dtype, requires_grad=True, device='cuda')
 e = torch.randn((128,128), dtype=dtype, requires_grad=True, device='cuda')
-do = torch.randn((2048,512), dtype=dtype, requires_grad=True, device='cuda')
+do = torch.randn((B,512,4096), dtype=dtype, requires_grad=True, device='cuda')
 do1 = do.clone()
 # o = bone(a,b,c)
 # #o = torch.einsum('abjk,bkl->abjl', b, c)
@@ -182,13 +191,13 @@ w = b@c+c
 ww= rearrange(w+b, 'a b r1 r2 ->(a r1) (b r2) ')
 
 bb = rearrange(b, 'a b r1 r2 ->(a r1) (b r2) ')
-dx_navie = gradx(do, ww)
-
+dx_native= gradx(do, ww)
+print(dx_native.reshape(-1))
 dx = bone_bwd(do, bb.t(), c.transpose(1,2))
 
-close = torch.allclose(dx_navie, dx, rtol=1e-05, atol=1e-08, equal_nan=False)
+close = torch.allclose(dx_native, dx, rtol=1e-05, atol=1e-08, equal_nan=False)
 print('grad x',close)
-print(dx_navie.reshape(-1))
+
 print(dx.reshape(-1))
 
 s = time.time()

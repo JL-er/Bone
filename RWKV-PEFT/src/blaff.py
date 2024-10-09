@@ -14,6 +14,30 @@ def contiguous(fn):
                   **{k: (v if not isinstance(v, torch.Tensor) else v.contiguous()) for k, v in kwargs.items()})
     return wrapper
 
+@triton.autotune(
+    configs=[
+        triton.Config({'BM': 64}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 128}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 64}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=8),
+    ],
+    key=['M', 'N', 'K'],
+)
+
 @triton.jit
 def bone_fwd_kernel(
     # Pointers to matrices
@@ -61,7 +85,7 @@ def bone_fwd_kernel(
     # `p_b` is a block of [BK, BN] pointers
     # See above `Pointer Arithmetic` section for details
 
-    o_am = (i_m * BM + tl.arange(0, BM)) % M
+    o_am = (i_m * BM + tl.arange(0, BM))
     o_bn = (i_n * BN + tl.arange(0, BN)) % N
     o_k = tl.arange(0, BK)
 
@@ -78,7 +102,8 @@ def bone_fwd_kernel(
         # If it is out of bounds, set it to 0.
         b_a = tl.load(p_a, mask=o_k[None, :] < K - k * BK, other=0.0)
         b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
-        b_b = tl.dot(b_b, b_bone).to(b_b.dtype)+b_bone+b_b
+        b_b += tl.dot(b_b, b_bone, allow_tf32=False).to(b_b.dtype)+b_bone.to(b_b.dtype)
+        #b_acc = b_b
         # We accumulate along the K dimension.
         b_acc += tl.dot(b_a, b_b, allow_tf32=False)
         # Advance the ptrs to the next K block.
@@ -87,51 +112,80 @@ def bone_fwd_kernel(
 
     o_cm = i_m * BM + tl.arange(0, BM)
     o_cn = i_n * BN + tl.arange(0, BN)
-    mask =  ( o_cm[:, None] < M) & (o_cn[None, :] < N )
+    mask = (o_cn[None, :] < N )
 
     #b_c = b_acc
 
     p_c = c + s_cm * o_cm[:, None] + s_cn * o_cn[None, :]
 
-
     tl.store(p_c, b_acc.to(c.dtype.element_ty), mask=mask)
 
+
+
+
+
+#@contiguous
 def bone_fwd(
-    x: torch.Tensor,
-    w: torch.Tensor,
+    a: torch.Tensor,
     b: torch.Tensor,
+    bone: torch.Tensor,
 ) -> torch.Tensor:
     #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
 
-        #print(x.shape,w.shape,b.shape)
-        M, K = x.shape
-        K, N = w.shape
-        # Allocates output.
-        o = x.new_empty(M, N)
-        #print(o.shape)
-        BM=64
-        BK=BN = 64
+    B, L, K = a.shape
+    M = B*L
+    K, N = b.shape
+    # Allocates output.
+    c = a.new_empty(B, L, N)
+    # print(c.shape,c.dtype)
+    # print(N//64)
+    # BM=64
+    BK=BN = 64
 
-        grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
-        bone_fwd_kernel[grid](
-            x, w, o, b, 
-            M, N, K,
-            x.stride(0), w.stride(1),
-            w.stride(0), w.stride(1),
-            o.stride(0), o.stride(1),
-            b.stride(0), b.stride(1), b.stride(2),
-            BM=BM,BK=BK,BN=BN,G=4,
-            num_stages=2,
-            ACTIVATION=None,
-        )
-        # ww = rearrange(w, '(a r1) (b r2) -> a b r1 r2', r1 = 64, r2 = 64)@b+b
-        # ww = rearrange(ww, 'a b r1 r2 ->(a r1) (b r2) ')
-        # o = x@(ww+w)
-        return o
+    #grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
+    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, BN))
+    bone_fwd_kernel[grid](
+        a, b, c, bone, 
+        M, N, K,
+        a.stride(1), a.stride(2),
+        b.stride(0), b.stride(1),
+        c.stride(1), c.stride(2),
+        bone.stride(0), bone.stride(1), bone.stride(2),
+        BK=BK,BN=BN,G=4,
+        ACTIVATION=None,
+    )
+    return c
 
 
+
+@triton.autotune(
+    configs=[
+        triton.Config({'BM': 64}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=2),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=4),
+        triton.Config({'BM': 128}, num_stages=2, num_warps=8),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=2),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=4),
+        triton.Config({'BM': 64}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 128}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=2, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=4, num_warps=8),
+        # triton.Config({'BM': 256}, num_stages=1, num_warps=2),
+        # triton.Config({'BM': 256}, num_stages=1, num_warps=4),
+        # triton.Config({'BM': 256}, num_stages=1, num_warps=8),
+    ],
+    key=['M', 'N', 'K'],
+)
 @triton.jit
-def bone_gradx(
+def bone_gradx_kernel(
     # Pointers to matrices
     a,
     b,
@@ -177,7 +231,7 @@ def bone_gradx(
     # `p_b` is a block of [BK, BN] pointers
     # See above `Pointer Arithmetic` section for details
 
-    o_am = (i_m * BM + tl.arange(0, BM)) % M
+    o_am = (i_m * BM + tl.arange(0, BM))
     o_bn = (i_n * BN + tl.arange(0, BN)) % N
     o_k = tl.arange(0, BK)
 
@@ -194,7 +248,7 @@ def bone_gradx(
         b_bone = tl.load(p_bone)
         b_a = tl.load(p_a, mask=o_k[None, :] < K - k * BK, other=0.0)
         b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
-        b_bone = tl.dot(b_bone,b_b).to(b_b.dtype)+b_bone
+        b_bone = tl.dot(b_bone,b_b, allow_tf32=False).to(b_b.dtype)+b_bone
 
 
         b_b = b_b+b_bone
@@ -208,28 +262,97 @@ def bone_gradx(
 
     o_cm = i_m * BM + tl.arange(0, BM)
     o_cn = i_n * BN + tl.arange(0, BN)
-    mask =  ( o_cm[:, None] < M) & (o_cn[None, :] < N )
+    #mask =  ( o_cm[:, None] < M) & (o_cn[None, :] < N )
 
-    b_c = b_acc
+    #b_c = b_acc
 
     p_c = c + s_cm * o_cm[:, None] + s_cn * o_cn[None, :]
 
-    tl.store(p_c, b_c.to(c.dtype.element_ty), mask=mask )
+    tl.store(p_c, b_acc.to(c.dtype.element_ty) )
 
+
+
+
+def bone_gradx(
+    do: torch.Tensor,
+    b: torch.Tensor,
+    bone: torch.Tensor,
+
+) -> torch.Tensor:
+    #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
+
+    B, L, K = do.shape
+    M = B*L
+    K, N = b.shape
+    _,block,_ =bone.shape
+    # Allocates output.
+    c = do.new_empty(B, L, N)
+    BK=BN = block
+
+
+    def grid(meta): return (triton.cdiv(M, meta['BM']), triton.cdiv(N, BN))
+    bone_gradx_kernel[grid](
+        do, b, c, bone, 
+        M, N, K,
+        do.stride(1), do.stride(2),
+        b.stride(0), b.stride(1),
+        c.stride(1), c.stride(2),
+        bone.stride(0), bone.stride(1), bone.stride(2),
+        BK=BK,BN=BN,G=4,
+        ACTIVATION=None,
+    )
+    return c
+
+
+@triton.autotune(
+    configs=[
+        triton.Config({'BK': 32}, num_stages=2, num_warps=2),
+        triton.Config({'BK': 32}, num_stages=2, num_warps=4),
+        triton.Config({'BK': 32}, num_stages=2, num_warps=8),
+        triton.Config({'BK': 32}, num_stages=4, num_warps=2),
+        triton.Config({'BK': 32}, num_stages=4, num_warps=4),
+        triton.Config({'BK': 32}, num_stages=4, num_warps=8),
+        triton.Config({'BK': 64}, num_stages=1, num_warps=2),
+        triton.Config({'BK': 64}, num_stages=1, num_warps=4),
+        triton.Config({'BK': 64}, num_stages=1, num_warps=8),
+        triton.Config({'BK': 64}, num_stages=2, num_warps=2),
+        triton.Config({'BK': 64}, num_stages=2, num_warps=4),
+        triton.Config({'BK': 64}, num_stages=2, num_warps=8),
+        triton.Config({'BK': 128}, num_stages=2, num_warps=2),
+        triton.Config({'BK': 128}, num_stages=2, num_warps=4),
+        triton.Config({'BK': 128}, num_stages=2, num_warps=8),
+        # triton.Config({'BK': 64}, num_stages=4, num_warps=2),
+        # triton.Config({'BK': 64}, num_stages=4, num_warps=4),
+        # triton.Config({'BK': 64}, num_stages=4, num_warps=8),
+        # triton.Config({'BK': 128}, num_stages=4, num_warps=2),
+        # triton.Config({'BK': 128}, num_stages=4, num_warps=4),
+        # triton.Config({'BK': 128}, num_stages=4, num_warps=8),
+        # triton.Config({'BK': 256}, num_stages=2, num_warps=2),
+        # triton.Config({'BK': 256}, num_stages=2, num_warps=4),
+        # triton.Config({'BK': 256}, num_stages=2, num_warps=8),
+        # triton.Config({'BK': 256}, num_stages=4, num_warps=2),
+        # triton.Config({'BK': 256}, num_stages=4, num_warps=4),
+        # triton.Config({'BK': 256}, num_stages=4, num_warps=8),
+    ],
+    key=['M','N','K'],
+)
 
 @triton.jit
-def bone_gradwb(
+def bone_gradb_kernel(
     # Pointers to matrices
     a,
     b,
     c,
     w,
     # Matrix dimensions
+    BL,
     M,
     N,
     K,
+    s_ab,
     s_am,
     s_ak,
+    s_bb,
     s_bk,
     s_bn,
     s_cp,
@@ -237,6 +360,7 @@ def bone_gradwb(
     s_cn,
     s_wm,
     s_wn,
+
     # Meta-parameters
     #BP: tl.constexpr,
     BM: tl.constexpr,
@@ -248,15 +372,17 @@ def bone_gradwb(
 
     i_n = tl.program_id(0)
 
-
-    o_bn = (i_n * BN + tl.arange(0, BN)) % N
+    offs_B = i_n//BL
+    o_bn = (i_n * BN + tl.arange(0, BN))%N
     o_k = tl.arange(0, BK)
     o_m = tl.arange(0, BM)
+    o_block=tl.arange(0, 64)
+    o_wn = o_bn%N
 
-    p_a = a + (o_m[:, None] * s_am + o_k[None, :] * s_ak)
-    p_b = b + (o_k[ :, None] * s_bk + o_bn[None, :] * s_bn)
+    p_a = a + (o_m[:, None] * s_am + o_k[None, :] * s_ak + offs_B*s_ab)
+    p_b = b + (o_k[ :, None] * s_bk + o_bn[None, :] * s_bn + offs_B*s_bb)
 
-    p_w = w + s_wm * o_m[:, None] + s_wn * o_bn[None, :]
+    p_w = w + s_wm * o_block[:, None] + s_wn * o_wn[None, :]
 
     #p_bone = bone + o_k[ :, None] * s_bonem +  o_k[None, :] * s_bonen + i_n * s_bonep
     dc = tl.zeros((64, 64), dtype=tl.float32)
@@ -264,7 +390,7 @@ def bone_gradwb(
         b_dw = tl.zeros((BM, BN), dtype=tl.float32)
         for k in range(0, tl.cdiv(K, BK)):
 
-            b_a = tl.load(p_a, mask=(o_k[None, :] < K - k * BK)&(o_m[:, None] < M - m * BM), other=0.0)
+            b_a = tl.load(p_a, mask=(o_k[None, :] < K - k * BK), other=0.0)
             b_b = tl.load(p_b, mask=o_k[:, None] < K - k * BK, other=0.0)
 
             b_dw += tl.dot(b_a, b_b, allow_tf32=False)
@@ -272,54 +398,25 @@ def bone_gradwb(
             p_a += BK * s_ak
             p_b += BK * s_bk
 
-        b_w = tl.load(p_w, mask=(o_m[:, None] < M - m * BM), other=0.0)
+        b_w = tl.load(p_w)
         p_a += BM * s_am
         p_w += BM * s_wm
         p_a -= K * s_ak
         p_b -= K * s_bk
-        dc += tl.dot(b_w.T, b_dw.to(b_w.dtype), allow_tf32=False)+b_dw
-        #dc += tl.dot(b_w.T, b_dw, allow_tf32=False)+b_dw.to(tl.float32)
+        dc += tl.dot(b_w.T, b_dw.to(b_w.dtype), allow_tf32=False).to(b_w.dtype)+b_dw
+        #dc += b_dw
 
 
-    p_c = c + o_k[ :, None] * s_cm +  o_k[None, :] * s_cn + i_n*s_cp
+    p_c = c + o_block[ :, None] * s_cm +  o_block[None, :] * s_cn + i_n*s_cp
 
     tl.store(p_c, dc.to(c.dtype.element_ty) )
 
-def bone_bwd(
-    a: torch.Tensor,
-    b: torch.Tensor,
-    bone: torch.Tensor,
-
-) -> torch.Tensor:
-    #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
-
-    M, K = a.shape
-    K, N = b.shape
-    _,block,_ =bone.shape
-    # Allocates output.
-    c = a.new_empty(M, N)
-    BM=64
-    BK= 64
-    BN = block
 
 
-    grid= (triton.cdiv(M, BM), triton.cdiv(N, BN))
-    bone_gradx[grid](
-        a, b, c, bone, 
-        M, N, K,
-        a.stride(0), a.stride(1),
-        b.stride(0), b.stride(1),
-        c.stride(0), c.stride(1),
-        bone.stride(0), bone.stride(1), bone.stride(2),
-        BM=BM,BK=BK,BN=BN,G=4,
-        num_stages=4,
-        ACTIVATION=None,
-    )
-    return c
 
-def bone_bwd_wb(
-    a: torch.Tensor,
-    b: torch.Tensor,
+def bone_gradb(
+    x: torch.Tensor,
+    do: torch.Tensor,
     w: torch.Tensor,
     bone_g: int,
     bone_b: int,
@@ -327,61 +424,58 @@ def bone_bwd_wb(
 ) -> torch.Tensor:
     #assert a.shape[2] == b.shape[1], 'Incompatible dimensions (A: {}x{}x{}, B: {}x{}x{})'.format(*a.shape, *b.shape)
 
-    M, K = a.shape
-    K, N = b.shape
-    #GN,block,_ =bone.shape
-    # Allocates output.
-    c = torch.empty((bone_g, bone_b, bone_b), dtype=a.dtype, device=a.device)
-    BM=64
-    BK=BN = 64
-    # print(c.shape,c.dtype)
-    # print(N//64)
-    #GB = triton.cdiv(N, BN)
+    B, M, K = x.shape
+    _, K, O = do.shape
+    N = B*O
+    
+    c = torch.zeros((B, bone_g, bone_b, bone_b), dtype=x.dtype, device=x.device)
+    BM = BN = bone_b
+    BL = triton.cdiv(O, BN)
+
     grid= (triton.cdiv(N, BN),)
-    bone_gradwb[grid](
-        a, b, c, w, 
-        M, N, K,
-        a.stride(0), a.stride(1),
-        b.stride(0), b.stride(1),
-        c.stride(0), c.stride(1), c.stride(2),
+    bone_gradb_kernel[grid](
+        x, do, c, w, 
+        BL, M, O, K,
+        x.stride(0), x.stride(1), x.stride(2),
+        do.stride(0),do.stride(1), do.stride(2),
+        c.stride(1), c.stride(2), c.stride(3),
         w.stride(0), w.stride(1),
-        BM=BM,BK=BK,BN=BN,G=4,
-        num_stages=4,
+        BM=BM,BN=BN,G=4,
         ACTIVATION=None,
     )
     return c
 
+# def native_gradb(x, do, w):
+#     w = rearrange(w, '(a r1) (b r2)->a b r1 r2 ', r1=64, r2=64)
+#     dw = x.transpose(1,2)@do
+#     dw = torch.sum(rearrange(dw, 'q (a r1) (b r2) ->q a b r1 r2 ', r1=64,r2=64), dim=0)
+#     tc = torch.sum(w.transpose(-2,-1)@dw, dim=0)
+#     tc += torch.sum(dw, dim=0)
+#     return tc
 
+def sum_gradb(x, do, w):
+
+    dw = torch.sum(x.transpose(1,2)@do, dim=0)
+    dw = rearrange(dw, '(a r1) (b r2) ->a b r1 r2 ', r1=64,r2=64)
+    ww = rearrange(w, '(a r1) (b r2) ->a b r1 r2 ', r1=64,r2=64)
+    tc  = torch.sum(ww.transpose(-2,-1)@dw, dim=0)
+    tc += torch.sum(dw, dim=0)
+    del ww
+    del dw
+    return tc
+
+def gradx(do, w, b):
+    ww = rearrange(w, '(a r1) (b r2) ->a b r1 r2 ', r1=64,r2=64)@b+b
+    ww= rearrange(ww, 'a b r1 r2 ->(a r1) (b r2) ')+w
+    dx = torch.einsum('blo,do->bld', do, ww)
+    return dx
 
 class BoneTriton(torch.autograd.Function):
     @staticmethod
     @contiguous
     def forward(ctx, x, w, b):
-        M, K = x.shape
-        K, N = w.shape
-        # Allocates output.
-        o = x.new_empty(M, N)
-        #print(o.shape)
-        BM=256
-        BK=BN = 64
 
-        grid=(triton.cdiv(M, BM), triton.cdiv(N, BN))
-        bone_fwd_kernel[grid](
-            x, w, o, b, 
-            M, N, K,
-            x.stride(0), w.stride(1),
-            w.stride(0), w.stride(1),
-            o.stride(0), o.stride(1),
-            b.stride(0), b.stride(1), b.stride(2),
-            BM=BM,BK=BK,BN=BN,G=4,
-            num_stages=2,
-            ACTIVATION=None,
-        )
-        # ww = rearrange(w, '(a r1) (b r2) -> a b r1 r2', r1 = 64, r2 = 64)@b+b
-        # ww = rearrange(ww, 'a b r1 r2 ->(a r1) (b r2) ')
-        # o = x@(ww+w)
-        #o = bone_fwd(x, w, b)
-       
+        o = bone_fwd(x,w,b)
         ctx.save_for_backward(x, w, b)
         return o
 
@@ -390,79 +484,20 @@ class BoneTriton(torch.autograd.Function):
     def backward(ctx, do):
         x, w, b= ctx.saved_tensors
         bone_g,bone_b,_=b.shape
-        dx = bone_bwd(do, w.t(), b.transpose(1,2))
-        dc = bone_bwd_wb(x.t(), do, w,bone_g,bone_b)
+        #dx = bone_gradx(do, w.t(), b.transpose(1,2))
+
+        # dc = bone_gradb(x.transpose(1,2), do, w, bone_g, bone_b)
+        # dc = torch.sum(dc, dim=0)
+        dx = gradx(do, w, b)
+
+        dc = sum_gradb(x, do ,w)
+
         return dx, None, dc
 
-# 使用方法
-# def bone(a,b, c):
-#     o = CustomEinsum.apply(a, b,c)
-#     return o
+
+
 
 def flash_bone(x,w,b):
-    B,T,D = x.shape
-    x = x.view(-1, x.size(-1))
     o = BoneTriton.apply(x,w.t(),b)
-    return o.view(B,T,o.size(-1))
+    return o
 
-
-# import torch
-# from torch.autograd import gradcheck
-# #torch.manual_seed(49)
-
-# # 创建输入张量
-# dtype=torch.float32
-# block_size = 64
-# L, input, ouput, bone_b = 1024, 2048, 4096, 64
-# a = torch.randn((L,input), dtype=dtype, requires_grad=True, device='cuda')
-
-# b = torch.randn((input,ouput), dtype=dtype, requires_grad=True, device='cuda')
-# c = torch.randn((ouput//bone_b, bone_b,bone_b), dtype=dtype, requires_grad=True, device='cuda')
-# do = torch.randn((L,ouput), dtype=dtype, requires_grad=True, device='cuda')
-# # a1=a.clone()
-# # b1=b.clone()
-# # c1=c.clone()
-# # do1 = do.clone()
-# o = flash_bone(a,b,c)
-
-# o.backward(do)
-# da, a.grad = a.grad.clone(), None
-# dc, c.grad = c.grad.clone(), None
-
-
-# w = rearrange(b, '(a r1) (b r2) -> a b r1 r2', r1 = 64 , r2 = 64 )@c+c
-# ww= rearrange(w, 'a b r1 r2 ->(a r1) (b r2) ')+b
-# o1 = a@ww
-# o1.backward(do)
-
-
-# bb = rearrange(b, '(a r1) (b r2) -> a b r1 r2 ', r1=64,r2=64)
-# dw = a.t()@do
-# dw = rearrange(dw, '(a r1) (b r2) -> a b r1 r2 ', r1=64,r2=64)
-
-# tc  = torch.sum(bb.transpose(2,3)@dw, dim=0)
-# tc += torch.sum(dw, dim=0)
-# print(tc.reshape(-1))
-
-# dccc = bone_bwd_wb(a.t(), do, b,ouput//bone_b,bone_b)
-# print(dccc.reshape(-1))
-
-# torch.testing.assert_close(tc, dccc, rtol=0, atol=1e-4)
-
-
-
-# print('forward', torch.allclose(o, o1, rtol=1e-05, atol=1e-08, equal_nan=False))
-# close = torch.allclose(da, a.grad, rtol=1e-05, atol=1e-08, equal_nan=False)
-# print('grad a',close)
-
-# # close = torch.allclose(db, b.grad, rtol=1e-05, atol=1e-8, equal_nan=False)
-# # print('grad b',close)
-
-# close = torch.allclose(dc, c.grad, rtol=1e-05, atol=1e-4, equal_nan=False)
-# print('grad c',close)
-# print(c.grad.reshape(-1))
-# print(dc.reshape(-1))
-
-# #print(torch.allclose(da, a.grad, rtol=1e-05, atol=1e-4, equal_nan=False))
-# #torch.testing.assert_close(da, a.grad, rtol=0, atol=1e-8)
-# torch.testing.assert_close(dc, c.grad, rtol=0, atol=1e-4)

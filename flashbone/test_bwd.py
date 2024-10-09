@@ -416,13 +416,13 @@ from torch.autograd import gradcheck
 torch.manual_seed(49)
 
 # 创建输入张量
-dtype=torch.bfloat16
-a = torch.randn((64,64*1), dtype=dtype, requires_grad=True, device='cuda')
+dtype=torch.float32
+a = torch.randn((2048,64*4), dtype=dtype, requires_grad=True, device='cuda')
 
-b = torch.randn((1,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
+b = torch.randn((4,8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 c = torch.randn((8,64,64), dtype=dtype, requires_grad=True, device='cuda')
 e = torch.randn((128,128), dtype=dtype, requires_grad=True, device='cuda')
-do = torch.randn((64,512), dtype=dtype, requires_grad=True, device='cuda')
+do = torch.randn((2048,512), dtype=dtype, requires_grad=True, device='cuda')
 do1 = do.clone()
 # o = bone(a,b,c)
 # #o = torch.einsum('abjk,bkl->abjl', b, c)
@@ -458,7 +458,7 @@ print(dccc.reshape(-1))
 
 close = torch.allclose(tc, dccc, rtol=1e-05, atol=1e-08, equal_nan=False)
 print('grad a',close)
-torch.testing.assert_close(tc, dccc, rtol=0, atol=1e-4)
+torch.testing.assert_close(tc, dccc, rtol=1e-3, atol=1e-8)
 
 
 torch.testing.assert_close(do, do1, rtol=0, atol=1e-8)
