@@ -55,20 +55,25 @@ BONE_CONFIG = {
 #         return F.linear(x,self.weight+w)
     
 
-class BoneLinear(nn.Module):#Bone-row
+class BoneLinear(nn.Module):#Bone-col
     def __init__(self, in_features: int, out_features: int, bias: bool):
         super().__init__()
         self.weight = nn.Parameter(torch.empty((out_features, in_features)))
-        assert bias == False, "Biased QuantLinear not supported"
+        assert bias == False
         self.r = BONE_CONFIG["r"]
         self.bone = nn.Parameter(torch.zeros(out_features//self.r, self.r, self.r))
-        
+    
     def forward(self, x):
-        def fn_bone(weight, b, x, r):
-            w = rearrange(weight, '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@b+b
-            w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
-            return F.linear(x , weight+w)
-        return torch_checkpoint(fn_bone, self.weight, self.bone, x, self.r, use_reentrant=False)
+        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone_A+self.bone_B
+        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        return F.linear(x,self.weight+w)
+        
+    # def forward(self, x):
+    #     def fn_bone(weight, b, x, r):
+    #         w = rearrange(weight, '(a r1) (b r2) -> b a r1 r2', r1 = r, r2 = r)@b+b
+    #         w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+    #         return F.linear(x , weight+w)
+    #     return torch_checkpoint(fn_bone, self.weight, self.bone, x, self.r, use_reentrant=False)
     
 
 def get_nb_trainable_parameters(model) -> tuple[int, int]:

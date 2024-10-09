@@ -25,7 +25,21 @@ cd RWKV-PEFT
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
-
+## Bone
+```
+class BoneLinear(nn.Module):#Bone-col
+    def __init__(self, in_features: int, out_features: int, bias: bool):
+        super().__init__()
+        self.weight = nn.Parameter(torch.empty((out_features, in_features)))
+        assert bias == False
+        self.r = BONE_CONFIG["r"]
+        self.bone = nn.Parameter(torch.zeros(out_features//self.r, self.r, self.r))
+    
+    def forward(self, x):
+        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone_A+self.bone_B
+        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
+        return F.linear(x,self.weight+w)
+```
 ## Flash-Bone
 coming soon!!!
 
