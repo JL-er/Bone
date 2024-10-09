@@ -2,7 +2,7 @@
 https://arxiv.org/pdf/2409.15371
 <p float="left">
   <img src="./assets/llama2-7b.png" width="45%" />
-  <img src="./assets/bone-col.png" width="45%" /> 
+  <img src="./assets/train_step.png" width="45%" /> 
 </p>
 
 <p>
