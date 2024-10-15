@@ -30,3 +30,4 @@ deepspeed --include=localhost:0 bone.py \
     --lr_scheduler_type "cosine" \
     --report_to "wandb" \
     --merge True \
+    --run_name "lora"
