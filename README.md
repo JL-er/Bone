@@ -15,16 +15,27 @@ Low-Rank Adaptation (LoRA) has achieved remarkable training results by freezing 
 ## How to Run
 ### HF Model
 ```
-cd llama
+git clone https://github.com/JL-er/PEFT-Bone.git
+```
+```
+git clone https://github.com/JL-er/Bone.git
+```
+```
+cd cd Bone/hf-ft
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
 ### RWKV Model
 ```
+git clone https://github.com/JL-er/RWKV-PEFT.git
+```
+You can check the script settings in the Bone/rwkv-ft file and replace them in the RWKV-PEFT/scripts directory.
+```
 cd RWKV-PEFT
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
+
 ## Bone
 ```
 class BoneLinear(nn.Module):#Bone-col
