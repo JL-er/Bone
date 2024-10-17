@@ -14,8 +14,11 @@ Low-Rank Adaptation (LoRA) has achieved remarkable training results by freezing 
 
 ## How to Run
 ### HF Model
+"PEFT-Bone is currently being merged into the official PEFT repository. In the future, you will only need to run 'pip install peft'
 ```
 git clone https://github.com/JL-er/PEFT-Bone.git
+cd PEFT-Bone
+pip install -e .
 ```
 ```
 git clone https://github.com/JL-er/Bone.git
@@ -32,6 +35,7 @@ git clone https://github.com/JL-er/RWKV-PEFT.git
 You can check the script settings in the Bone/rwkv-ft file and replace them in the RWKV-PEFT/scripts directory.
 ```
 cd RWKV-PEFT
+pip install -r requirements.txt
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
