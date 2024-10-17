@@ -26,7 +26,6 @@ git clone https://github.com/JL-er/Bone.git
 ```
 cd cd Bone/hf-ft
 sh scripts/run_bone.sh
-sh scripts/merge_bone.sh
 ```
 ### RWKV Model
 ```
