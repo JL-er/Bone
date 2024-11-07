@@ -14,8 +14,8 @@ https://arxiv.org/pdf/2409.15371
 ### HF Model
 "PEFT-Bone is currently being merged into the official PEFT repository. In the future, you will only need to run 'pip install peft'
 ```
-git clone https://github.com/JL-er/PEFT-Bone.git
-cd PEFT-Bone
+git clone https://github.com/huggingface/peft.git
+cd peft
 pip install -e .
 ```
 ```
