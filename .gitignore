@@ -1,6 +1,6 @@
-RWKV-PEFT/__pycache__/
-RWKV-PEFT/wandb/
-RWKV-PEFT/src/__pycache__/
+Bone/__pycache__/
+Bone/wandb/
+Bonesrc/__pycache__/
 llama/__pycache__/
 llama/wandb/
 __pycache__/

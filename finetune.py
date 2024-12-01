@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from typing import Optional, Dict, Sequence, List, Literal
 import logging
 import os
-import torch.nn as nn
 
 import torch
 import torch.distributed
@@ -13,9 +12,9 @@ from transformers import Trainer, BitsAndBytesConfig
 from datasets import load_dataset
 import datasets
 import numpy as np
-from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training, PeftModel
+from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training, PeftModel, BoneConfig
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
-from boneLinear import BoneLinear,get_gmm_model,print_trainable_parameters,save_bone,BONE_CONFIG
+
 
 IGNORE_INDEX = -100
 EOT_TOKEN = "<|EOT|>"
@@ -26,7 +25,6 @@ PROMPT = (
         "Write a response that appropriately completes the request.\n\n"
         "### Instruction:\n{instruction}\n\n### Response:"
     )
-
 
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):
@@ -56,7 +54,9 @@ class TrainingArguments(transformers.TrainingArguments):
     bf16: Optional[bool] = field(default=True)
     run_name: str= field(default='None', metadata={"help": "Path to the training data."})
     use_bone: Optional[bool] = field(default=False)
-    bone_b: Optional[int] = field(default=64)
+    bone_r: Optional[int] = field(default=64)
+    init_bone_weights: Literal[True, False] = field(default=True)
+
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
@@ -159,7 +159,7 @@ def train_tokenize_function(examples, tokenizer, query, response):
     return data_dict
 
 def build_model(script_args, checkpoint_dir):
-    if not script_args.use_lora: assert script_args.bits in [16, 32]
+    #if not script_args.use_lora and not script_args.use_bone: assert script_args.bits in [16, 32]
     compute_dtype = (torch.bfloat16 if script_args.bf16 else torch.float32)
     model = transformers.AutoModelForCausalLM.from_pretrained(
         script_args.model_name_or_path,
@@ -175,6 +175,7 @@ def build_model(script_args, checkpoint_dir):
         torch_dtype=compute_dtype,
         trust_remote_code=True,
     )
+    model.enable_input_require_grads()
     if compute_dtype == torch.float32 and script_args.bits == 4:
         if torch.cuda.is_bf16_supported():
             logger.info('='*80)
@@ -182,12 +183,6 @@ def build_model(script_args, checkpoint_dir):
             logger.info('='*80)
     setattr(model, 'model_parallel', True)
     setattr(model, 'is_parallelizable', True)
-
-    if hasattr(model, "enable_input_require_grads"):
-        model.enable_input_require_grads()
-    else:
-        def make_inputs_require_grad(module, input, output):
-            output.requires_grad_(True)
     # Tokenizer
     
     if script_args.use_lora and script_args.bits < 16:
@@ -215,11 +210,25 @@ def build_model(script_args, checkpoint_dir):
                 init_lora_weights=script_args.init_lora_weights,
             )
             model = get_peft_model(model, peft_config)
-    ###if script_args.use_gmm:
-    print(model)
     if script_args.use_bone:
-        BONE_CONFIG['r'] = script_args.bone_b
-        model = get_gmm_model(model)
+        # if checkpoint_dir is not None:
+        #     logger.info(f"Loading adapters from {checkpoint_dir}.")
+        #     # os.path.join(checkpoint_dir, 'adapter_model')
+        #     model = PeftModel.from_pretrained(model, checkpoint_dir, is_trainable=True)
+        # elif script_args.adapter_name_or_path is not None:
+        #     logger.info(f"Initilize adapters from {script_args.model_name_or_path}/{script_args.adapter_name_or_path}.")
+        #     bone_config = BoneConfig.from_pretrained(script_args.model_name_or_path, subfolder = script_args.adapter_name_or_path)
+        #     model = PeftModel.from_pretrained(model, script_args.model_name_or_path, subfolder = script_args.adapter_name_or_path, is_trainable=True, config=bone_config)
+        # else:
+        #     logger.info(f'Init LoRA modules...')
+        peft_config = BoneConfig(
+            task_type=TaskType.CAUSAL_LM,
+            target_modules=script_args.target_modules.split(','),
+            inference_mode=False,
+            r=script_args.bone_r, 
+            init_weights=script_args.init_bone_weights,
+        )
+        model = get_peft_model(model, peft_config, adapter_name='weight')
 
     for name, module in model.named_modules():
         if 'norm' in name or 'gate' in name:
@@ -253,7 +262,6 @@ def train():
     logger.info("BOS Token", tokenizer.bos_token, tokenizer.bos_token_id)
     logger.info("EOS Token", tokenizer.eos_token, tokenizer.eos_token_id)
 
-
     if script_args.local_rank == 0:
         logger.info("Load tokenizer from {} over.".format(script_args.model_name_or_path))
     
@@ -280,9 +288,7 @@ def train():
     if script_args.local_rank == 0:
         torch.distributed.barrier()
         print(model)
-        #model.print_trainable_parameters()
-        print_trainable_parameters(model)
-
+        model.print_trainable_parameters()
         logger.info("Training dataset samples:", len(train_dataset))
         for index in random.sample(range(len(train_dataset)), 3):
             logger.info(f"Sample {index} of the training set: {train_dataset[index]['input_ids']}, {train_dataset[index]['labels']}.")
@@ -296,14 +302,12 @@ def train():
         trainer.add_callback(SavePeftModelCallback)
     trainer.train(resume_from_checkpoint = resume_from_checkpoint_dir)
     trainer.save_state()
-    if script_args.use_lora and script_args.merge:
+    if script_args.merge:
         model = model.merge_and_unload()
         model.save_pretrained(script_args.output_dir)
         tokenizer.save_pretrained(script_args.output_dir)
     if not script_args.use_lora and not script_args.use_bone:
         safe_save_model_for_hf_trainer(trainer=trainer, output_dir=script_args.output_dir)
-    if script_args.use_bone:
-        save_bone(trainer=trainer, output_dir=script_args.output_dir)
         
 
 if __name__ == "__main__":

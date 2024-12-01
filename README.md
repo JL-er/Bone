@@ -1,14 +1,17 @@
-# BONE: BLOCK AFFINE TRANSFORMATION AS PARAMETER EFFICIENT FINE-TUNING METHODS FOR LARGE LANGUAGE MODELS
-https://arxiv.org/pdf/2409.15371
+# Bone: Block-Affine Adaptation of Large Language Models [Paper](https://arxiv.org/pdf/2409.15371)
 
+## Introduction
+Low-Rank Adaptation (LoRA) has achieved remarkable training results by freezing the original weights and training only low-rank matrices, establishing itself as the predominant fine-tuning method for LLMs. Many LoRA variants have emerged, yet they lack a design tailored to the characteristics of LLM weights and fail to leverage the original weights effectively. To address the sparsity of LLM weights, and drawing inspiration from GQA and MQA, we propose Block-Affine Adaptation (Bone), a novel PEFT technique distinct from LoRA. By dividing the original weights into multiple subspaces that share a single matrix for weight updates, Bone simplifies the process by requiring the trainable matrix to be initialized to zero, eliminating the need for complex initialization as in some LoRA variants. Compared to LoRA, Bone significantly reduces memory usage and achieves faster computation. Evaluation of both NLU and NLG tasks demonstrates that Bone substantially outperforms LoRA and its variants. Inspired by Pissa, we propose a new theory called 'Weight Guide' to better utilize the information embedded in the original weights. This approach extracts valuable information through a linear transformation of the original weight matrix using a trainable matrix. To validate the effectiveness of 'Weight Guide' we combined it with Bone to create a new structure called Block-Affine Transformation (Bat), and ablation experiments confirmed the effectiveness of 'Weight Guide'.
 <p float="left">
   <img src="./assets/llama2-7b.png" width="45%" />
-  <img src="./assets/train_step.png" width="45%" /> 
+  <img src="./assets/bone_instruction.png" width="45%" /> 
 </p>
 
 <p>
-  <img src="./assets/score.png" />
+  <img src="./assets/image.png" />
 </p>
+
+## Support by [Huggingface/peft](https://github.com/huggingface/peft.git)
 
 ## How to Run
 ### HF Model
@@ -22,7 +25,7 @@ pip install -e .
 git clone https://github.com/JL-er/Bone.git
 ```
 ```
-cd cd Bone/hf-ft
+cd Bone
 sh scripts/run_bone.sh
 ```
 ### RWKV Model
@@ -36,31 +39,40 @@ pip install -r requirements.txt
 sh scripts/run_bone.sh
 sh scripts/merge_bone.sh
 ```
-
-## Bone
+# Advanced Usage
 ```
-class BoneLinear(nn.Module):#Bone-col
-    def __init__(self, in_features: int, out_features: int, bias: bool):
-        super().__init__()
-        self.weight = nn.Parameter(torch.empty((out_features, in_features)))
-        assert bias == False
-        self.r = BONE_CONFIG["r"]
-        self.bone = nn.Parameter(torch.zeros(out_features//self.r, self.r, self.r))
-    
-    def forward(self, x):
-        w = rearrange(self.weight, '(a r1) (b r2) -> b a r1 r2', r1 = self.r, r2 = self.r)@self.bone+self.bone
-        w = rearrange(w, 'b a r1 r2 ->(a r1) (b r2) ')
-        return F.linear(x,self.weight+w)
+import torch
+import os
+from peft import BoneConfig, get_peft_model
+from transformers import AutoTokenizer, AutoModelForCausalLM
+MODEL_ID = "meta-llama/Llama-2-7b-hf"
+model = AutoModelForCausalLM.from_pretrained(MODEL_ID, torch_dtype=torch.bfloat16, device_map="auto")
+tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+tokenizer.pad_token_id = tokenizer.eos_token_id
+bone_config = BoneConfig(
+    r=64,
+    target_modules=["q_proj", "o_proj", "k_proj", "v_proj", "gate_proj", "up_proj", "down_proj"],
+    task_type="CAUSAL_LM",
+)
+peft_model = get_peft_model(model, bone_config)
+peft_model.print_trainable_parameters()
+OUTPUT_DIR="Bone-Llama-2-7b-hf-r64"
+# Save Bone modules:
+peft_model.peft_config["default"].init_lora_weights = True # Important
+peft_model.save_pretrained(OUTPUT_DIR)
+# Save residual model:
+peft_model = peft_model.unload()
+peft_model.save_pretrained(OUTPUT_DIR)
+# Save the tokenizer:
+tokenizer.save_pretrained(OUTPUT_DIR)
 ```
-## Flash-Bone
-coming soon!!!
-
 
 # Citation
 If you find this repo useful, please consider citing our works:
+# Citation
 ```bib
-@misc{kang2024boneblockaffinetransformation,
-      title={Bone: Block Affine Transformation as Parameter Efficient Fine-tuning Methods for Large Language Models}, 
+@misc{kang2024boneblockaffineadaptationlarge,
+      title={Bone: Block-Affine Adaptation of Large Language Models}, 
       author={Jiale Kang},
       year={2024},
       eprint={2409.15371},
