@@ -1,16 +1,21 @@
 # DiSHA: Dimension-Sharding Adaptation with Fast Convergence and Fast Computation [Paper](https://arxiv.org/pdf/2409.15371)
-Old Version: Bone: Block-Affine Adaptation of Large Language Models
+### Old Version: Bone: Block-Affine Adaptation of Large Language Models
 ## Introduction
 Low-Rank Adaptation (LoRA) leverages the low intrinsic rank of weight updates in Large Language Models (LLMs), establishing a Parameter-Efficient Fine-Tuning (PEFT) paradigm. However, LoRA suffers from slow convergence. We introduce Dimension-Sharding Adaptation (DiSHA), which expands the PEFT design space to unlock lower intrinsic ranks and faster convergence by default. Within DiSHA's design space, we propose Block Affine Adaptation (Bone), a computationally efficient structure that delivers both high performance and efficiency. While certain DiSHA configurations may result in colinear updates to weight shards, we address this with Block Affine Transformation Adaptation (BAT), a nonlinear variant of DiSHA. BAT introduces nonlinearity by combining trainable matrices with original weight shards in a nonlinear manner, inducing nonlinearity in matrix updates without introducing additional parameters. Empirical results show that Bone, under the DiSHA framework, consistently outperforms LoRA variants in both NLG and NLU tasks, with significantly improved computational efficiency. Further analysis demonstrates that BAT enhances model capabilities by leveraging its nonlinear design.
-<p float="left">
-  <img src="./assets/llama2-7b.png" width="45%" />
-  <img src="./assets/grad.png" width="45%"  /> 
-</p>
+
+
 
 ### DISHA design space
 <p>
   <img src="./assets/design.png"/>
 </p>
+
+### Comparison of Initial Gradients and Convergence Speed
+<p float="left">
+  <img src="./assets/llama2-7b.png" width="45%" />
+  <img src="./assets/grad.png" width="45%"  /> 
+</p>
+
 ### Eval
 <p>
   <img src="./assets/image.png" width="45%"/>
